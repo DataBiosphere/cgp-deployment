@@ -263,7 +263,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       fc_lambda_port='443'
 
       fc_lambda_domain='fc_lambda_domain'
-      ask_questions "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
+      ask_question "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
 
 #      dcc_dashboard_port='dcc_dashboard_port'
 #      ask_question "What is your DCC Dashboard Port?" "$DCC_DASHBOARD_PORT" "DCC Dashboard Port" $dcc_dashboard_port
