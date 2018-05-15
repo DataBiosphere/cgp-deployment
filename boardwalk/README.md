@@ -37,15 +37,9 @@ Here is a summary of what you need to do in order to create a Google OAuth2 app:
 
 The boardwalk installer has the option to install boardwalk and its components in either devevelopment or production mode (dev/prod). If you are installing in production, skip this section and head to **Installation Questions**. Otherwise, keep reading.
 
-To make deployment during development faster, dev mode will assume you have cloned *dcc-dashboard, dcc-dashboard-service, and dcc-metadata-indexer* under *dcc-ops/boardwalk* If you are running dcc-ops in dev mode and you haven't already, clone the repos by running the following from within `dcc-ops/boardwalk`:
+To make deployment during development faster, the `install_bootstrap` script will clone [cgp-dashboard](https://github.com/DataBiosphere/cgp-dashboard), [cgp-dashboard-service](https://github.com/DataBiosphere/cgp-dashboard-service), and [dcc-metadata-indexer](https://github.com/BD2KGenomics/dcc-metadata-indexer) under `cgp-deployment/boardwalk/` if it looks like you haven't already done so. (If you're working off a non-default branch in one of those repos, you're going to want to do this yourself.)
 
-```
-git clone https://github.com/BD2KGenomics/dcc-dashboard-service.git
-git clone https://github.com/BD2KGenomics/dcc-dashboard.git
-```
-Make sure you check the branches you will be doing development on within each of the cloned repos.
-
-Once you run the installer, docker-compose will use dev.yml to set up boardwalk and its components. It will create the Docker images using the Dockerfiles located inside `dcc-dashboard, dcc-dashboard-service, and dcc-metadata-indexer/v2`. 
+Once you run the installer, docker-compose will use dev.yml to set up boardwalk and its components. It will create the Docker images using the Dockerfiles located inside `cgp-dashboard, cgp-dashboard-service, and dcc-metadata-indexer/v2`. 
 
 In addition, installing boardwalk in dev mode will also install kibana under `myexample.com/kibana/` to aid in debugging all things related to elasticsearch, as well as to help in making new queries and aggregations that may be necessary. 
 

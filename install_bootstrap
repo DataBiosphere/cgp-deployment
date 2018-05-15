@@ -36,6 +36,13 @@ For more information see:
 
 MSG
 
+# Check if a repository exists at a given directory and if not, clone it
+function check_for_repo {
+    if [ ! -d "$2" ]; then
+        git clone "$1" "$2"
+    fi
+}
+
 function generate_password {
     tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1
 }
@@ -335,8 +342,14 @@ CONFIG
       mustache boardwalk_launcher_config/boardwalk.config boardwalk/conf/boardwalk.config.template > boardwalk/.env
 
       cd boardwalk
-      #Bringing stuff down in case there are some cached containers
-      echo "Bringing down any existing Boardwalk container and volumes"
+      # If in dev mode, check for dev repos and clone if not present
+      if [ "${boardwalk_mode}" = "dev" ]; then
+        check_for_repo https://github.com/DataBiosphere/cgp-dashboard.git dcc-dashboard
+        check_for_repo https://github.com/DataBiosphere/cgp-dashboard-service.git dcc-dashboard-service
+        check_for_repo https://github.com/BD2KGenomics/dcc-metadata-indexer.git dcc-metadata-indexer
+      fi
+      # Bringing stuff down in case there are some cached containers
+      echo "Bringing down any existing Boardwalk containers and volumes"
       sudo docker-compose -f ${boardwalk_mode}.yml down -v
       echo "Creating Boardwalk associated containers"
       sudo docker-compose -f ${boardwalk_mode}.yml up -d
