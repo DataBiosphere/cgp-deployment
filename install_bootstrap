@@ -346,7 +346,7 @@ CONFIG
       if [ "${boardwalk_mode}" = "dev" ]; then
         check_for_repo https://github.com/DataBiosphere/cgp-dashboard.git dcc-dashboard
         check_for_repo https://github.com/DataBiosphere/cgp-dashboard-service.git dcc-dashboard-service
-        check_for_repo https://github.com/BD2KGenomics/dcc-metadata-indexer.git dcc-metadata-indexer
+        check_for_repo https://github.com/DataBiosphere/cgp-boardwalk.git boardwalk
       fi
       # Bringing stuff down in case there are some cached containers
       echo "Bringing down any existing Boardwalk containers and volumes"

@@ -37,9 +37,9 @@ Here is a summary of what you need to do in order to create a Google OAuth2 app:
 
 The boardwalk installer has the option to install boardwalk and its components in either devevelopment or production mode (dev/prod). If you are installing in production, skip this section and head to **Installation Questions**. Otherwise, keep reading.
 
-To make deployment during development faster, the `install_bootstrap` script will clone [cgp-dashboard](https://github.com/DataBiosphere/cgp-dashboard), [cgp-dashboard-service](https://github.com/DataBiosphere/cgp-dashboard-service), and [dcc-metadata-indexer](https://github.com/BD2KGenomics/dcc-metadata-indexer) under `cgp-deployment/boardwalk/` if it looks like you haven't already done so. (If you're working off a non-default branch in one of those repos, you're going to want to do this yourself.)
+To make deployment during development faster, the `install_bootstrap` script will clone [cgp-dashboard](https://github.com/DataBiosphere/cgp-dashboard), [cgp-dashboard-service](https://github.com/DataBiosphere/cgp-dashboard-service), and [cgp-boardwalk](https://github.com/DataBiosphere/cgp-boardwalk) under `cgp-deployment/boardwalk/` if it looks like you haven't already done so. (If you're working off a non-default branch in one of those repos, you're going to want to do this yourself.)
 
-Once you run the installer, docker-compose will use dev.yml to set up boardwalk and its components. It will create the Docker images using the Dockerfiles located inside `cgp-dashboard, cgp-dashboard-service, and dcc-metadata-indexer/v2`. 
+Once you run the installer, docker-compose will use dev.yml to set up boardwalk and its components. It will create the Docker images using the Dockerfiles located in each of the repositories listed above.
 
 In addition, installing boardwalk in dev mode will also install kibana under `myexample.com/kibana/` to aid in debugging all things related to elasticsearch, as well as to help in making new queries and aggregations that may be necessary. 
 
