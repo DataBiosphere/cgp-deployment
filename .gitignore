@@ -103,7 +103,7 @@ boardwalk/.env
 boardwalk/aws.config
 boardwalk/dcc-dashboard-service/
 boardwalk/dcc-dashboard/
-boardwalk/dcc-metadata-indexer/
+boardwalk/boardwalk/
 boardwalk_launcher_config/boardwalk.config
 
 aws.config

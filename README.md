@@ -1,8 +1,8 @@
-# dcc-ops
+# cgp-deployment
 
 ## About
 
-This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform for AWS.  The system is designed to receive genomic data, run analysis at scale on the cloud, and return analyzed results to authorized users.  It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform for AWS. The system is designed to receive genomic data, run analysis at scale on the cloud, and return analyzed results to authorized users. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
 
 ## Components
 
@@ -14,20 +14,18 @@ These components are setup with the install process available in this repository
 
 * [Boardwalk](boardwalk/README.md): our file browsing portal on top of Redwood
 
-These are related projects that are either already setup and available for use on the web or are used by components above.
+These are related projects that are either already setup and available for use on the web or are used by components above:
 
-* [Dockstore](http://dockstore.org): our workflow and tool sharing platform
+* [Dockstore](https://dockstore.org): our workflow and tool sharing platform
 * [Toil](https://github.com/BD2KGenomics/toil): our workflow engine, these workflows are shared via Dockstore
 
 ## Installing the Platform
 
-These directions below assume you are using AWS.  We will include additional cloud instructions as `dcc-ops` matures.
+These directions below assume you are using AWS.  We will include additional cloud instructions as `cgp-deployment` matures.
 
 ### Collecting Information
 
-Make sure you have:
-
-* you know what region you're running in e.g. `us-west-2`
+Make sure you know what region you're running in (e.g. `us-west-2`).
 
 ### Starting an AWS VM
 
@@ -37,11 +35,11 @@ Use the AWS console or command line tool to create a host. For example:
 * r4.xlarge
 * 250GB disk
 
-We will refer to this as the host VM throughout the documentation below and it is the machine running all the Docker containers for each of the components below.
+We will refer to this as the host VM throughout the rest of the documentation. It will run the Docker containers for all of the components listed below.
 
 You should make a note of your security group name and ID and ensure you can connect via ssh.
 
-**NOTE:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.
+**Note** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.
 
 ### AWS Tasks
 
@@ -66,32 +64,17 @@ Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the sa
 
 ### Setup for Boardwalk
 
-Here is a summary of what you need to do. See the Boardwalk [README](boardwalk/README.md) for details.
-
-#### Create a Google Oauth2 app
-
-You need to create a Google Oauth2 app to enable Login and token download from the dashboard. If you don't want to enable this on the dashboard during installation, simply enter a random string when asked for the *Google Client ID* and the *Google Client Secret*. You can consult [here](http://bitwiser.in/2015/09/09/add-google-login-in-flask.html#creating-a-google-project) under "Creating A Google Project" if you want to read more details. Here is a summary of what you need to do:
-
-* Go to [Google's Developer Console](https://console.developers.google.com/).
-* On the upper left side of the screen, click on the drop down button.
-* Create a project by clicking on the plus sign on the pop-up window.
-* On the next pop up window, add a name for your project.
-* Once you create it, click on the "Credentials" section on the left hand side.
-* Click on the "OAuth Consent Screen". Fill out a product name and choose an email for the Google Application. Fill the rest of the entries as you see fit for your purposes, or leave them blank, as they are optional. Save it.
-* Go to the "Credentials" tab. Click on the "Create Credentials" drop down menu and choose "OAuth Client ID".
-* Choose "Web Application" from the menu. Assign it a name.
-* Under "Authorized JavaScript origins", enter `http://<YOUR_SITE>`. Press Enter. Add a second entry, same as the first one, but use *https* instead of *http*
-* Under "Authorized redirect URIs", enter `http://<YOUR_SITE>/gCallback`. Press Enter. Add a second entry, same as the first one, but use *https* instead of *http*
-* Click "Create". A pop up window will appear with your Google Client ID and Google Client Secret. Save these. If you lose them, you can always go back to the Google Console, and click on your project; the information will be there.
-
-Please note: at this point, the dashboard only accepts login from emails with a 'ucsc.edu' domain. In the future, it will support different email domains.
+See the Boardwalk [README](boardwalk/README.md) for details.
 
 ### Running the Installer
 
-Once the above setup is done, clone this repository onto your server and run the bootstrap script
+Once the above setup is done, clone this repository onto your server and run the bootstrap script.
 
-    # note, you may need to checkout the particular branch or release tag you are interested in...
-    git clone https://github.com/BD2KGenomics/dcc-ops.git && cd dcc-ops && sudo bash install_bootstrap
+    $ git clone https://github.com/DataBiosphere/cgp-deployment.git
+    $ cd cgp-deployment
+    $ sudo bash install_bootstrap
+
+Remember to checkout the particular branch or release tag that you're interested in if it's necessary.
 
 #### Installer Question Notes
 
@@ -99,8 +82,6 @@ The `install_bootstrap` script will ask you to configure each service interactiv
 
 * Boardwalk
   * Install in prod mode
-  * On question `What is your Google Client ID?`, put your Google Client ID. See [here](http://bitwiser.in/2015/09/09/add-google-login-in-flask.html#creating-a-google-project)
-  * On question `What is your Google Client Secret?`, put your Google Client Secret. See [here](http://bitwiser.in/2015/09/09/add-google-login-in-flask.html#creating-a-google-project)
 * Common
   * Installing in `dev`mode will use letsencrypt's staging service, which won't exhaust your certificate's limit, but will install fake ssl certificates. `prod` mode will install official SSL certificates.  
   
@@ -116,7 +97,7 @@ Here are things we need to explain how to do post install:
 * first of all, how to go to the website and confirm things are working e.g. https://ops-dev.ucsc-cgl.org or whatever the domain name is
 * user log in via google, retrieve token
 * Get the reference data used by the RNASeq-CGL pipeline:
-*    Instructions for downloading reference data for RNASeq-CGL are located here: https://github.com/BD2KGenomics/toil-rnaseq/wiki/Pipeline-Inputs 
+*    Instructions for downloading reference data for RNASeq-CGL are located here: https://github.com/DataBiosphere/toil-rnaseq/wiki/Pipeline-Inputs 
 * Test data inputs for the RNASeq-CGL pipeline are locate here: https://github.com/UCSC-Treehouse/pipelines/tree/master/samples 
 * update the decider manually to point to these new reference URLs (via exec into the Docker container)
 * get sample fastq data
@@ -132,7 +113,7 @@ To test that everything installed successfully, you can run `cd test && ./integr
 
 ### Running RNA-Seq Analysis on Sample Data
 
-To do RNA-Seq Analysis, you must first upload reference files to Redwood. You can obtain the reference files by running from within dcc-ops:
+To do RNA-Seq Analysis, you must first upload reference files to Redwood. You can obtain the reference files by running from within cgp-deployment:
 
 ```
 reference/download_reference.sh
@@ -144,7 +125,7 @@ Once you have successfully uploaded the reference files, you can start submittin
 
 ### Troubleshooting
 
-If something goes wrong, you can [open an issue](https://github.com/BD2KGenomics/dcc-ops/issues/new) or [contact a human](https://github.com/BD2KGenomics/dcc-ops/graphs/contributors).
+If something goes wrong, you can [open an issue](https://github.com/DataBiosphere/cgp-deployment/issues/new) or [contact a human](https://github.com/DataBiosphere/cgp-deployment/graphs/contributors).
 
 ### Tips
 

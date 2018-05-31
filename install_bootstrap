@@ -19,7 +19,7 @@ UCSC CLOUD COMMONS INSTALLATION BOOTSTRAPPER
 -----------------------------------------------------------------------------
 This tool will setup a single host which has all of the infrastructure we
 use to run the UCSC Cloud Commons reference implemenation used by the
-UCSC Genomics Institute.  See https://github.com/DataBiosphere/dcc-ops
+UCSC Genomics Institute.  See https://github.com/DataBiosphere/cgp-deployment
 
 This system requires the following:
 * Docker support in your Linux distribution (Ubuntu 16.04 is officially supported).
@@ -31,7 +31,7 @@ ETH_DEV env variable before running this script.
 
 For more information see:
 
-* the main GitHub page: https://github.com/DataBiosphere/dcc-ops
+* the main GitHub page: https://github.com/DataBiosphere/cgp-deployment
 * the UCSC Genomics Institute - Analysis Core: http://ucsc-cgl.org
 
 MSG
@@ -249,7 +249,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 #      fi
 
       dcc_dashboard_host='dcc_dashboard_host'
-      ask_question "What is the hostname of dcc-dashboard?" "$DCC_DASHBOARD_HOST" "DCC Dashboard Host" $dcc_dashboard_host
+      ask_question "What is the hostname of dcc-dashboard? (This is likely the domain name resolving to your virtual machine.)" "$DCC_DASHBOARD_HOST" "DCC Dashboard Host" $dcc_dashboard_host
         
       es_port='443'
       es_protocol='https'
@@ -291,8 +291,6 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       dos_dss_service='dos_dss_service'
       ask_question "What is the domain of the dos-dss server?" "$DOS_DSS_SERVICE" "DOS DSS Service" $dos_dss_service
 
-      #user_group='user_group'
-      #ask_question "What is the user and group that should own the files from the metadata-indexer? (Your current USER:GROUP is $(stat -c '%u:%g' $HOME))" "$USER_GROUP" "User Group" $user_group
       user_group=$(stat -c '%u:%g' $HOME)
 
       #Setting up the database vars for login 
