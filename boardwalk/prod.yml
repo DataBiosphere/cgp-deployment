@@ -18,7 +18,7 @@ services:
       FC_LAMBDA_DOMAIN: "${fc_lambda_domain}"
       FC_LAMBDA_PORT: "${fc_lambda_port}"
       DOS_DSS_SERVICE: "${dos_dss_service}"
-    image: quay.io/ucsc_cgl/commons-dashboard-service:commons-0.1.0-beta
+    image: quay.io/ucsc_cgl/commons-dashboard-service:commons-0.1.2-beta
     volumes:
       - ~/dcc-dashboard-service/logs:/app/log
     #build: dcc-dashboard-service
@@ -86,7 +86,7 @@ services:
       - server
     restart: always
   boardwalk:
-    image: quay.io/ucsc_cgl/commons-boardwalk:commons-0.1.0-beta
+    image: quay.io/ucsc_cgl/commons-boardwalk:commons-0.1.1-beta
     environment:
       - BOARDWALK_HOST=${dcc_dashboard_host}
       - BW_DATA_URL=${dcc_dashboard_protocol}://${dcc_dashboard_host}
