@@ -27,11 +27,10 @@ Here is a summary of what you need to do in order to create a Google OAuth2 app:
 * Click on the "OAuth Consent Screen". Fill out a product name and choose an email for the Google Application. Fill the rest of the entries as you see fit for your purposes, or leave them blank, as they are optional. Save it.
 * Go to the "Credentials" tab. Click on the "Create Credentials" drop down menu and choose "OAuth Client ID".
 * Choose "Web Application" from the menu. Assign it a name.
-* Under "Authorized JavaScript origins", enter `http://<YOUR_SITE>`. Press Enter. Add a second entry, same as the first one, but use `https` instead of `http`.
-* Under "Authorized redirect URIs", enter `http://<YOUR_SITE>/gCallback`. Press Enter. Add a second entry, same as the first one, but use `https` instead of `http`.
+* Under "Authorized JavaScript origins", enter `https://<YOUR_SITE>`.
+* Under "Authorized redirect URIs", enter `https://<YOUR_SITE>/gCallback`.
 * Click "Create". A pop up window will appear with your Google Client ID and Google Client Secret. Save these. If you lose them, you can always go back to the Google Console, and click on your project; the information will be there. Keep these values stored in a safe location. Treat them as you would treat a credit card number.
 
-**Note** at this point, the dashboard only accepts login from emails with a 'ucsc.edu' domain. In the future, it will support different email domains.
 
 ### Development Mode
 

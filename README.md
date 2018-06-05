@@ -2,7 +2,7 @@
 
 ## About
 
-This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform for AWS. The system is designed to receive genomic data, run analysis at scale on the cloud, and return analyzed results to authorized users. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
 
 ## Components
 
@@ -90,38 +90,9 @@ Once the installer completes, the system should be up and running. Congratulatio
 
 ## Post-Installation
 
-### TODO
-
-Here are things we need to explain how to do post install:
-
-* first of all, how to go to the website and confirm things are working e.g. https://ops-dev.ucsc-cgl.org or whatever the domain name is
-* user log in via google, retrieve token
-* Get the reference data used by the RNASeq-CGL pipeline:
-*    Instructions for downloading reference data for RNASeq-CGL are located here: https://github.com/DataBiosphere/toil-rnaseq/wiki/Pipeline-Inputs 
-* Test data inputs for the RNASeq-CGL pipeline are locate here: https://github.com/UCSC-Treehouse/pipelines/tree/master/samples 
-* update the decider manually to point to these new reference URLs (via exec into the Docker container)
-* get sample fastq data
-    * ...
-* upload sample fastq data
-* trigger indexing so you can immediately see fastq data in the file browser e.g. https://ops-dev.ucsc-cgl.org/file_browser.html, `sudo docker exec -it boardwalk_dcc-metadata-indexer_1 bash -c "/app/dcc-metadata-indexer/cron.sh"`
-* monitor running of Consonance logs and worker nodes to see running data
-* download RNASeq-CGL analysis results from the portal
-
 ### Confirm Proper Function
 
 To test that everything installed successfully, you can run `cd test && ./integration.sh`. This will do an upload and download with core-client and check the results.
-
-### Running RNA-Seq Analysis on Sample Data
-
-To do RNA-Seq Analysis, you must first upload reference files to Redwood. You can obtain the reference files by running from within cgp-deployment:
-
-```
-reference/download_reference.sh
-```
-
-This will download the files under `reference/samples`. You can then use the core client to do a spinnaker upload as described previously and use the _manifest.tsv_ within the `reference` folder. 
-
-Once you have successfully uploaded the reference files, you can start submitting fastq files to redwood to run analysis on them. See the help section on the file browser for more information on the template. Use `RNA-Seq` or `scRNA-Seq` when filling out the *Submitter Experimental Design* column on your manifest.
 
 ### Troubleshooting
 
