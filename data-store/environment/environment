@@ -1,0 +1,96 @@
+# HCA DSS environment variables
+#
+# Source this file in your bash shell using "source environment".
+#
+# The environment variables set in this file are appropriate for the
+# HCA DSS development environment. Individual environment variable
+# values are overridden when deployed, based on the deployment stage.
+# That logic resides in {chalice,daemons}/build_deploy_config.sh.
+
+# TODO: (akislyuk) document configuration ingestion order
+
+# Resolve the location of this file and set DSS_HOME to the root
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
+export DSS_HOME="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+
+EXPORT_ENV_VARS_TO_LAMBDA_ARRAY=(
+    ADMIN_USER_EMAILS
+    DSS_DEPLOYMENT_STAGE
+    DSS_S3_BUCKET
+    DSS_GS_BUCKET
+    API_DOMAIN_NAME
+    DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS
+    DSS_NOTIFICATION_SENDER
+    DSS_S3_CHECKOUT_BUCKET
+    DSS_GS_CHECKOUT_BUCKET
+    SWAGGER_URL
+    DSS_NOTIFY_DELAYS
+)
+
+set -a
+EXPORT_ENV_VARS_TO_LAMBDA=${EXPORT_ENV_VARS_TO_LAMBDA_ARRAY[*]}
+DSS_DEPLOYMENT_STAGE=dev
+AWS_DEFAULT_OUTPUT=json
+AWS_DEFAULT_REGION=us-east-1
+GCP_DEFAULT_REGION=us-central1
+DSS_S3_BUCKET=org-humancellatlas-dss-dev
+DSS_S3_BUCKET_TEST=org-humancellatlas-dss-test
+DSS_S3_BUCKET_TEST_FIXTURES=org-humancellatlas-dss-test-fixtures
+DSS_S3_BUCKET_INTEGRATION=org-humancellatlas-dss-integration
+DSS_S3_BUCKET_STAGING=org-humancellatlas-dss-staging
+DSS_S3_BUCKET_PROD=org-humancellatlas-dss-prod
+DSS_S3_CHECKOUT_BUCKET=org-humancellatlas-dss-checkout-dev
+DSS_S3_CHECKOUT_BUCKET_TEST=org-humancellatlas-dss-checkout-test
+DSS_S3_CHECKOUT_BUCKET_INTEGRATION=org-humancellatlas-dss-checkout-integration
+DSS_S3_CHECKOUT_BUCKET_STAGING=org-humancellatlas-dss-checkout-staging
+DSS_S3_CHECKOUT_BUCKET_PROD=org-humancellatlas-dss-checkout-prod
+DSS_GS_BUCKET=org-humancellatlas-dss-dev
+DSS_GS_BUCKET_TEST=org-humancellatlas-dss-test
+DSS_GS_BUCKET_TEST_FIXTURES=org-humancellatlas-dss-test-fixtures
+DSS_GS_BUCKET_INTEGRATION=org-humancellatlas-dss-integration
+DSS_GS_BUCKET_STAGING=org-humancellatlas-dss-staging
+DSS_GS_BUCKET_PROD=org-humancellatlas-dss-prod
+DSS_GS_CHECKOUT_BUCKET=org-humancellatlas-dss-checkout-dev
+DSS_GS_CHECKOUT_BUCKET_TEST=org-humancellatlas-dss-checkout-test
+DSS_GS_CHECKOUT_BUCKET_STAGING=org-humancellatlas-dss-checkout-staging
+DSS_GS_CHECKOUT_BUCKET_PROD=org-humancellatlas-dss-checkout-prod
+DSS_NOTIFICATION_SENDER="DSS Notifier <dss.humancellatlas@gmail.com>"
+GOOGLE_APPLICATION_CREDENTIALS="${DSS_HOME}/gcp-credentials.json"
+GOOGLE_APPLICATION_SECRETS="${DSS_HOME}/application_secrets.json"
+API_DOMAIN_NAME=dss.dev.data.humancellatlas.org
+TOKENINFO_URL=https://${API_DOMAIN_NAME}/internal/tokeninfo
+NOTIFY_URL=https://${API_DOMAIN_NAME}/internal/notify
+SWAGGER_URL=https://${API_DOMAIN_NAME}/v1/swagger.json
+DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_ARRAY=(
+    chanzuckerberg.com
+    ucsc.edu
+    broadinstitute.org
+    ebi.ac.uk
+    {human-cell-atlas-travis-test,broad-dsde-mint-{dev,test,staging}}.iam.gserviceaccount.com
+)
+DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS=${DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_ARRAY[*]}
+DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_TEST="human-cell-atlas-travis-test.iam.gserviceaccount.com"
+DSS_ES_DOMAIN="dss-index-$DSS_DEPLOYMENT_STAGE"
+PYTHONWARNINGS=ignore:ResourceWarning,ignore::UserWarning:zipfile:
+DSS_SECRETS_STORE="dcp/dss"
+EVENT_RELAY_AWS_USERNAME="dss-event-relay-${DSS_DEPLOYMENT_STAGE}"
+EVENT_RELAY_AWS_ACCESS_KEY_SECRETS_NAME="event-relay-user-aws-access-key"
+GOOGLE_APPLICATION_CREDENTIALS_SECRETS_NAME="gcp-credentials.json"
+GOOGLE_APPLICATION_SECRETS_SECRETS_NAME="application_secrets.json"
+
+# Configure the delays between notification attempts. The first attempt is immediate. The second attempt is one
+# minute later. Then ten minutes, one hour, and six hours in between. Then 24 hours minus all previous delays and
+# lastly every 24 hours for six days. This is exponential initially and then levels off where exponential would be
+# too infrequent. The last attempt is made seven days after the first one, which is easy to remember.
+#
+DSS_NOTIFY_DELAYS="0 60 600 3600 21600 60540 86400 86400 86400 86400 86400 86400"
+
+set +a
+
+if [[ -f "${DSS_HOME}/environment.local" ]]; then
+    source "${DSS_HOME}/environment.local"
+fi
+
+scripts/get_gcp_credentials.py || echo "Unable to recover gcp credentials from Secrets Manager. Your configuratoin is incorrect/incomplete."
+export ADMIN_USER_EMAILS=`jq -r ".client_email" ${GOOGLE_APPLICATION_CREDENTIALS}` || ADMIN_USER_EMAILS=""
