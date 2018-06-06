@@ -5,37 +5,74 @@
 # This file is sourced when you run "source environment".
 
 set -au
-# Environment variable assignments (var=value) in "set -a" mode are
-# automatically exported.
+
 PROJECT=commons
 DSS_DEPLOYMENT_STAGE=staging
-AWS_DEFAULT_REGION=us-west-2
-# TODO Identify AWS profile to use for staging deployment
-AWS_PROFILE=
+
+# Google Region and Credentials
 GCP_DEFAULT_REGION=us-central1
+GOOGLE_APPLICATION_CREDENTIALS="${DSS_HOME}/gcp-credentials.json"
+GOOGLE_APPLICATION_SECRETS="${DSS_HOME}/application_secrets.json"
+
+# AWS Region
+AWS_DEFAULT_REGION=us-west-2
+
+# AWS ElasticSearch Configuration
+DSS_ES_INSTANCE_TYPE=t2.medium.elasticsearch
+## DSS_ES_DOMAIN="dss-index-$DSS_DEPLOYMENT_STAGE"
+
+# AWS Event Relay Service Configuration
+## EVENT_RELAY_AWS_USERNAME="dss-event-relay-${DSS_DEPLOYMENT_STAGE}"
+## EVENT_RELAY_AWS_ACCESS_KEY_SECRETS_NAME="event-relay-user-aws-access-key"
+
+# AWS User-Specified Buckets
 DSS_S3_BUCKET=${PROJECT}-dss-${DSS_DEPLOYMENT_STAGE}
 DSS_S3_BUCKET_TEST=${PROJECT}-dss-test
 DSS_S3_BUCKET_TEST_FIXTURES=${PROJECT}-dss-test-fixtures
 DSS_S3_CHECKOUT_BUCKET=${PROJECT}-dss-checkout-${DSS_DEPLOYMENT_STAGE}
 DSS_S3_CHECKOUT_BUCKET_TEST=${PROJECT}-dss-checkout-test
-DSS_S3_CHECKOUT_BUCKET_TEST_FIXTURES=${PROJECT}-dss-checkout-test-fixtures
+
+# AWS Static Buckets
+DSS_S3_BUCKET_INTEGRATION=${PROJECT}-dss-integration
+DSS_S3_BUCKET_STAGING=${PROJECT}-dss-staging
+DSS_S3_BUCKET_PROD=${PROJECT}-dss-prod
+DSS_S3_CHECKOUT_BUCKET_INTEGRATION=${PROJECT}-dss-checkout-integration
+DSS_S3_CHECKOUT_BUCKET_STAGING=${PROJECT}-dss-checkout-staging
+DSS_S3_CHECKOUT_BUCKET_PROD=${PROJECT}-dss-checkout-prod
+
+# Google User-Specified Buckets
 DSS_GS_BUCKET=${PROJECT}-dss-${DSS_DEPLOYMENT_STAGE}
 DSS_GS_BUCKET_TEST=${PROJECT}-dss-test
 DSS_GS_BUCKET_TEST_FIXTURES=${PROJECT}-dss-test-fixtures
 DSS_GS_CHECKOUT_BUCKET=${PROJECT}-dss-checkout-${DSS_DEPLOYMENT_STAGE}
 DSS_S3_CHECKOUT_BUCKET_TEST=${PROJECT}-dss-checkout-test
-GOOGLE_APPLICATION_CREDENTIALS="${DSS_HOME}/gcp-credentials.json"
-DSS_ES_DOMAIN="dss-index-${DSS_DEPLOYMENT_STAGE}"
-DSS_TEST_ES_PATH=/usr/local/bin/elasticsearch
+
+# Google Static Buckets
+DSS_GS_BUCKET_INTEGRATION=${PROJECT}-dss-integration
+DSS_GS_BUCKET_STAGING=${PROJECT}-dss-staging
+DSS_GS_BUCKET_PROD=${PROJECT}-dss-prod
+DSS_GS_CHECKOUT_BUCKET_INTEGRATION=${PROJECT}-dss-checkout-integration
+DSS_GS_CHECKOUT_BUCKET_STAGING=${PROJECT}-dss-checkout-staging
+DSS_GS_CHECKOUT_BUCKET_PROD=${PROJECT}-dss-checkout-prod
+
+# Swagger API Configuration
 API_DOMAIN_NAME=${PROJECT}-dss.ucsc-cgp.org
-TOKENINFO_URL=https://${API_DOMAIN_NAME}/internal/tokeninfo
-NOTIFY_URL=https://${API_DOMAIN_NAME}/internal/notify
-SWAGGER_URL=https://${API_DOMAIN_NAME}/v1/swagger.json
+## TOKENINFO_URL=https://${API_DOMAIN_NAME}/internal/tokeninfo
+## NOTIFY_URL=https://${API_DOMAIN_NAME}/internal/notify
+## SWAGGER_URL=https://${API_DOMAIN_NAME}/v1/swagger.json
+
+# Authorized account for this datastore (generally the current user or travis)
+DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_TEST="commons-travis.iam.gserviceaccount.com"
+
+# TODO Identify AWS profile to use for staging deployment
+AWS_PROFILE=
 # TODO Identify what the following value should be for staging
 DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_TEST=
-# TODO Identify what the following value should be for staging -- just run the script and use the standard/default?
-EVENT_RELAY_AWS_USERNAME="dss-temp-test-event-relay"
 
+# Elasticsearch path
+DSS_TEST_ES_PATH=/usr/local/bin/elasticsearch
+
+# Kibana path
 # Added to run Kibana locally using data-store/scripts/kibana-proxy.py
-DSS_KIBANA_BIN=/usr/local/Cellar/kibana/5.5.2/bin/kibana
+DSS_KIBANA_BIN=/usr/local/bin/kibana
 set +au
