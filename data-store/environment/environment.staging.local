@@ -61,9 +61,6 @@ API_DOMAIN_NAME=${PROJECT}-dss.ucsc-cgp.org
 ## NOTIFY_URL=https://${API_DOMAIN_NAME}/internal/notify
 ## SWAGGER_URL=https://${API_DOMAIN_NAME}/v1/swagger.json
 
-# Authorized account for this datastore (generally the current user or travis)
-DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_TEST="commons-travis.iam.gserviceaccount.com"
-
 # TODO Identify AWS profile to use for staging deployment
 AWS_PROFILE=
 # TODO Identify what the following value should be for staging
