@@ -8,8 +8,7 @@ set -au
 # Environment variable assignments (var=value) in "set -a" mode are
 # automatically exported.
 PROJECT=commons
-STAGE=staging
-DSS_DEPLOYMENT_STAGE=${PROJECT}${STAGE}
+DSS_DEPLOYMENT_STAGE=staging
 AWS_DEFAULT_REGION=us-west-2
 # TODO Identify AWS profile to use for staging deployment
 AWS_PROFILE=
