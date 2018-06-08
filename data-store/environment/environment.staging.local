@@ -7,7 +7,7 @@
 set -au
 
 PROJECT=commons
-DSS_DEPLOYMENT_STAGE=staging
+DSS_DEPLOYMENT_STAGE=${PROJECT}staging
 
 # Google Region and Credentials
 GCP_DEFAULT_REGION=us-central1
@@ -18,24 +18,17 @@ GOOGLE_APPLICATION_SECRETS="${DSS_HOME}/application_secrets.json"
 AWS_DEFAULT_REGION=us-west-2
 
 # AWS ElasticSearch Configuration
-DSS_ES_INSTANCE_TYPE=t2.medium.elasticsearch
+DSS_ES_INSTANCE_TYPE=m4.large.elasticsearch
 DSS_ES_DOMAIN="dss-index-$DSS_DEPLOYMENT_STAGE"
 
 # AWS Event Relay Service Configuration
-## EVENT_RELAY_AWS_USERNAME="dss-event-relay-${DSS_DEPLOYMENT_STAGE}"
-## EVENT_RELAY_AWS_ACCESS_KEY_SECRETS_NAME="event-relay-user-aws-access-key"
+EVENT_RELAY_AWS_USERNAME="dss-event-relay-${DSS_DEPLOYMENT_STAGE}"
+EVENT_RELAY_AWS_ACCESS_KEY_SECRETS_NAME="event-relay-user-aws-access-key"
 
-# BIN for ES and Kibana
-DSS_TEST_ES_PATH=/home/quokka/git/elasticsearch-5.6.9/bin/elasticsearch
-DSS_KIBANA_BIN=/usr/local/Cellar/kibana/5.5.2/bin/kibana
-
-# AWS Buckets for Integration/Staging/Prod
-DSS_S3_BUCKET_INTEGRATION=${PROJECT}-dss-integration
-DSS_S3_BUCKET_STAGING=${PROJECT}-dss-staging
-DSS_S3_BUCKET_PROD=${PROJECT}-dss-prod
-DSS_S3_CHECKOUT_BUCKET_INTEGRATION=${PROJECT}-dss-checkout-integration
-DSS_S3_CHECKOUT_BUCKET_STAGING=${PROJECT}-dss-checkout-staging
-DSS_S3_CHECKOUT_BUCKET_PROD=${PROJECT}-dss-checkout-prod
+# example: /home/quokka/git/elasticsearch-5.6.9/bin/elasticsearch
+DSS_TEST_ES_PATH=
+# example: /usr/local/Cellar/kibana/5.5.2/bin/kibana
+DSS_KIBANA_BIN=
 
 # AWS User-Specified Buckets
 DSS_S3_BUCKET=${PROJECT}-dss-${DSS_DEPLOYMENT_STAGE}
@@ -44,17 +37,8 @@ DSS_S3_BUCKET_TEST_FIXTURES=${PROJECT}-dss-test-fixtures-${DSS_DEPLOYMENT_STAGE}
 DSS_S3_CHECKOUT_BUCKET=${PROJECT}-dss-checkout-${DSS_DEPLOYMENT_STAGE}
 DSS_S3_CHECKOUT_BUCKET_TEST=${PROJECT}-dss-checkout-test-${DSS_DEPLOYMENT_STAGE}
 
-# Google Buckets for Integration/Staging/Prod
-# Same names used in s3
-DSS_GS_BUCKET_INTEGRATION=${DSS_S3_BUCKET_INTEGRATION}
-DSS_GS_BUCKET_STAGING=${DSS_S3_BUCKET_STAGING}
-DSS_GS_BUCKET_PROD=${DSS_S3_BUCKET_PROD}
-DSS_GS_CHECKOUT_BUCKET_INTEGRATION=${DSS_S3_CHECKOUT_BUCKET_INTEGRATION}
-DSS_GS_CHECKOUT_BUCKET_STAGING=${DSS_S3_CHECKOUT_BUCKET_STAGING}
-DSS_GS_CHECKOUT_BUCKET_PROD=${DSS_S3_CHECKOUT_BUCKET_PROD}
-
 # Google User-Specified Buckets
-# Same names used in s3
+# Same Names Used in S3
 DSS_GS_BUCKET=${DSS_S3_BUCKET}
 DSS_GS_BUCKET_TEST=${DSS_S3_BUCKET_TEST}
 DSS_GS_BUCKET_TEST_FIXTURES=${DSS_S3_BUCKET_TEST_FIXTURES}
@@ -62,9 +46,12 @@ DSS_GS_CHECKOUT_BUCKET=${DSS_S3_CHECKOUT_BUCKET}
 DSS_GS_CHECKOUT_BUCKET_TEST=${DSS_S3_BUCKET}
 
 # Swagger API Configuration
-API_DOMAIN_NAME=${PROJECT}-dss.ucsc-cgp.org
-## TOKENINFO_URL=https://${API_DOMAIN_NAME}/internal/tokeninfo
-## NOTIFY_URL=https://${API_DOMAIN_NAME}/internal/notify
-## SWAGGER_URL=https://${API_DOMAIN_NAME}/v1/swagger.json
+API_DOMAIN_NAME=08eamvkn41.execute-api.us-west-2.amazonaws.com
+TOKENINFO_URL=https://${API_DOMAIN_NAME}/commonsstaging/internal/tokeninfo
+NOTIFY_URL=https://${API_DOMAIN_NAME}/commonsstaging/internal/notify
+SWAGGER_URL=https://${API_DOMAIN_NAME}/commonsstaging/v1/swagger.json
+
+# Authorized account for this datastore (generally the current user or travis)
+DSS_SUBSCRIPTION_AUTHORIZED_DOMAINS_TEST="ucsc-cgp-production.iam.gserviceaccount.com"
 
 set +au
