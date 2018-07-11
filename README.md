@@ -1,10 +1,12 @@
-# cgp-deployment (Commons Edition)
+# cgp-deployment (Commons/STAGE Edition)
 
 ## About
 
-This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org)
-Computational Genomics Platform for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects.
-In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](https://commons.ucsc-cgp.org/)
+Computational Genomics Platform for AWS and GCP. It uses, supports, and drives development of several key GA4GH APIs and open source projects.
+In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for
+that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+It is currently being used in the NIH Data Commons Pilot and NHLBI Data STAGE programs.
 
 ## Components
 
@@ -12,14 +14,14 @@ The system has components fulfilling a range of functions, all of which are open
 
 These components are setup with the install process available in this repository:
 
-* [Boardwalk](boardwalk/README.md): our file browsing portal on top of the Blue Box
+* [Boardwalk](boardwalk/README.md): our file browsing portal on top of the HCA/DataBiosphere Data Storage System
 
 These are related projects that are either already setup and available for use on the web or are used by components above:
 
 * [Dockstore](https://dockstore.org): our workflow and tool sharing platform
-* [Toil](https://github.com/BD2KGenomics/toil): our workflow engine, these workflows are shared via Dockstore
+* [Toil](https://github.com/DataBiosphere/toil): our workflow engine, these workflows are shared via Dockstore
 
-## Setting up the Enviroment
+## Setting up the Environment
 
 These directions below assume you are using AWS.  We will include additional cloud instructions as `cgp-deployment` matures.
     
@@ -28,11 +30,9 @@ First, we need to setup an EC2 instance to install our server. You will need to 
 line tool to create a host. We will refer to this as the host VM throughout the rest of the documentation. 
 It will run the Docker containers for all of the components listed below.
 
-9. Select the region in AWS Console top toolbar. **Note** We have had problems when uploading big files to Virginia (~25GB).
+9. Select the region in AWS Console top toolbar. **Note** We have had problems when uploading big files (~25GB) to AWS region us-east-1 (N. Virginia).
     If possible, set up your AWS anywhere else but Virginia. Preferrably US-West-2 (Oregon).
 9. In the AWS Web Console Top toolbar, Click on the **Services** > **EC2** (Under the **Compute** submenu)
-    - **Note**:  Know which region to using in AWS. **Note** We have had problems when uploading big files to Virginia (~25GB).
-    If possible, set up your AWS anywhere else but Virginia. Preferrably US-West-2 (Oregon)
 9. In the sidebar, look under the **Instances** subsection, click the **Instances** link
 9. Near to top of the page, click on the blue button with the name *Launch Instance*.
 This should take you to the "Choose an Amazon Machine Image (AMI)" page.
@@ -111,7 +111,7 @@ Now that we created our Elastic IP. We can finish configuring our Security Group
 |ALL TCP|TCP|0 - 65535|\<Name of your Security Group>|
 
 ### 4. Create your Host VM's Subdomain
-Now we need to create a subdomain and link it to for Host VM. Your subdomain should contain your.
+Now we need to create a subdomain and link it to for Host VM. Your subdomain should contain your name.
 So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
 
 9. Select the top toolbar. Click **Service**. Then, click **Route 53**.
@@ -128,7 +128,9 @@ So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
 9. Before you start deploying make sure the following components are already setup
     - Dos Azul Lambda
     - Boardwalk [README](boardwalk/README.md) for instructions on how to setup the external components.
-    - Bagit Firecloud Lambda 
+    - Bagit Firecloud Lambda
+    - HCA/DataBiosphere Data Storage System(DSS)
+    - DataBiosphere Azul indexer (for Commons)
     
 9. Write down the following information:
     - Your Docker Version in your host VM by using the bash command `docker -v`.
