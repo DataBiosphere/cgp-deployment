@@ -4,8 +4,8 @@
 
 This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](https://commons.ucsc-cgp.org/)
 Computational Genomics Platform for AWS and GCP. It uses, supports, and drives development of several key GA4GH APIs and open source projects.
-In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for
-that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+In many ways it is a generalization of the cloud infrastructure developed for [PCAWG](https://dcc.icgc.org/pcawg)
+and will serve as a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
 It is currently being used in the NIH Data Commons Pilot and NHLBI Data STAGE programs.
 
 ## Components
@@ -32,8 +32,8 @@ It will run the Docker containers for all of the components listed below.
 
 1. Select the region in AWS Console top toolbar. **Note** We have had problems when uploading big files (~25GB) to AWS region us-east-1 (N. Virginia).
     If possible, set up your AWS anywhere else but Virginia. We use US-West-2 (Oregon).
-1. In the AWS Web Console Top toolbar, Click on the **Services** > **EC2** (Under the **Compute** submenu)
-1. In the sidebar, look under the **Instances** subsection, click the **Instances** link
+1. In the AWS Web Console Top toolbar, Click on the **Services** > **EC2** (Under the **Compute** submenu).
+1. In the sidebar, look under the **Instances** subsection, click the **Instances** link.
 1. Near to top of the page, click on the blue button with the name *Launch Instance*.
 This should take you to the "Choose an Amazon Machine Image (AMI)" page.
 1. Click on the **AWS Marketplace** Item in sidebar.
@@ -96,11 +96,12 @@ Otherwise, skip to the next step.
     Record the `PublicIP` in this response. This will be used for our Host VM.
 1. Go back to the AWS Console.
 1. Select the top toolbar. Click **Service**. Then, click **EC2**.
-1. In the sidebar under the **Network & Security** subsection, click the **Elastic IPs** link
-1. In the table, find the Elastic IP you generated earlier.
+1. In the sidebar under the **Network & Security** subsection, click the **Elastic IPs** link.
+1. In the table, find and select the Elastic IP you generated earlier.
 1. Click in the **Actions** button on top of the table. Then, click **Associate Address**.
 1. In the Instance textbox, put in the name of your Host VM.
-1. Afterwards, click the caret the **Private IP** textbox. There should be only one ip in the dropdown. That is your Host VMs private IP. Click on that IP.
+1. Afterwards, click the caret on the **Private IP** textbox. There should be only one ip in the dropdown.
+   That is your Host VMs private IP. Click on that IP.
 1. Finally, click **Associate**.
 
 ### 3. Add remaining settings to Security Group
@@ -117,7 +118,7 @@ Now that we created our Elastic IP. We can finish configuring our Security Group
 Now we need to create a subdomain and link it to for Host VM. Your subdomain should contain your name.
 So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
 
-1. Select the top toolbar. Click **Service**. Then, click **Route 53**.
+1. Select the top toolbar. Click **Services**. Then, click **Route 53**.
 1. Click on **Hosted Zones** in the sidebar.
 1. In the table, click on **ucsc-cgp-dev.org.** under the **Domain Name** column.
 1. Click on the Blue **Create Record Set** button.
@@ -126,10 +127,10 @@ So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
  
 ## Deploying the Platform
 
-### 1 .Before Installation
+### 1. Before Installation
 
 1. Before you start deploying make sure the following components are already setup
-    - Dos Azul Lambda
+    - DOS Azul Lambda
     - Boardwalk [README](boardwalk/README.md) for instructions on how to setup the external components.
     - Bagit Firecloud Lambda
     - HCA/DataBiosphere Data Storage System(DSS)
@@ -138,7 +139,7 @@ So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
 1. Write down the following information:
     - Your Docker Version in your host VM by using the bash command `docker -v`.
     - The hostname you created in Route 53
-    - The region of your Hosy VM(e.g. `us-west-2`).
+    - The region of your Host VM (e.g. `us-west-2`).
     - The location of the **SSH Key Pair** created after you created your Host VM.
     - Google Client ID from the Boardwalk setup
     - Google Client Secret from the Boardwalk setup
@@ -181,7 +182,7 @@ The server is the **Commons** module that allows us to access **Boardwalk** and 
 1. When it asks to launch the server in either `prod` or `dev` mode, type in `prod` mode.
 1. Then, the bootstrapper will ask you if you want to run the boardwalk installer. Answer with `Y`.
 1. Next, it will ask whether you want to run boardwalk on dev or prod. Type in `prod` mode.
-1. You will be asked to input the following information in the corresponding order:
+1. You will be asked to input the following information in order:
     1. the hostname of `dcc-dashboard`. This should be the url host you set in AWS Route 53.
     1. The Google Client ID when you created the Google App for Boardwalk
     1. The Google Client Secret when you created the Google App for Boardwalk
