@@ -81,7 +81,10 @@ Otherwise, skip to the next step.
     - default region name (The Region of Your Host VM)
     - default output format (Output format is usually `json`)
     
-1. Run `aws ec2 allocate-address --domain "vpc" --region <region name>`.
+1. Run
+   ```
+   aws ec2 allocate-address --domain "vpc" --region <region name>
+   ```
 1. You should receive a text response like the one below.
     ```json
     {
@@ -146,12 +149,29 @@ So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
 
 ### 2. Running the Installer
 
-1. Connect into your Host VM using the bash command `ssh ubuntu@<your Route 53 hotname> -i <location of your SSH Key Pair>`
+1. Connect into your Host VM using the bash command
+   ```
+   ssh ubuntu@<your Route 53 hotname> -i <location of your SSH Key Pair>
+   ```
 1. Once you are connected to for Host VM, clone the *cgp-deployment* repo using
-`git clone https://github.com/DataBiosphere/cgp-deployment.git`
-1. Run `cd cgp-deployment` change your current directory to the repo root folder
-1. Run `git checkout feature/commons` to switch to the Commons build of cgp-deployment
-1. Run `sudo bash install_bootstrap` to start installing
+   ```
+   git clone https://github.com/DataBiosphere/cgp-deployment.git
+   ```
+1. Run
+   ```
+   cd cgp-deployment
+   ```
+    change your current directory to the repo root folder.
+1. Run
+   ```
+   git checkout feature/commons
+   ```
+   to switch to the Commons build of cgp-deployment.
+1. Run
+   ```
+   sudo bash install_bootstrap
+   ```
+   to start installing.
 1. Next, you will be asked to continue the script, so just answer `Y` to continue.
 1. Then, you will be asked to install/upgrade Docker.
 If you don't have Docker or your Docker versions is older than version 18.05.0-ce, 
