@@ -130,11 +130,11 @@ So if your name is Bob, your subdomain should be `bob.ucsc-cgp-dev.org`.
 ### 1. Before Installation
 
 1. Before you start deploying make sure the following components are already setup
+    - HCA/DataBiosphere Data Storage System (DSS)
+    - DataBiosphere Azul indexer (for Commons)
     - DOS Azul Lambda
     - Boardwalk [README](boardwalk/README.md) for instructions on how to setup the external components.
     - Bagit Firecloud Lambda
-    - HCA/DataBiosphere Data Storage System(DSS)
-    - DataBiosphere Azul indexer (for Commons)
     
 1. Write down the following information:
     - Your Docker Version in your host VM by using the bash command `docker -v`.
@@ -188,7 +188,7 @@ The server is the **Commons** module that allows us to access **Boardwalk** and 
     1. The Google Client Secret when you created the Google App for Boardwalk
     1. The Google Site Verification Code from the Boardwalk setup
     1. The url of the Bagit Firecloud Lambda
-    1. The url of the Dos Azul Lambda
+    1. The url of the DOS Azul Lambda (aka DOS DSS service)
 
 Once the installer completes, the system should be up and running. Congratulations! See `docker ps` to get an idea of what's running.
 
