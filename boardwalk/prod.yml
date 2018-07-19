@@ -34,7 +34,7 @@ services:
       - login-db
     restart: always
   dcc-dashboard:
-    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.2-beta
+    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.3-beta
     #build: dcc-dashboard
     ports:
       - "80"
