@@ -25,18 +25,27 @@ These directions below assume you are using AWS.  We will include additional clo
 
 ### Collecting Information
 
-The installation script will prompt for several question. It is useful prepare for some of the answers beforehand to expedite the installation process. Here are a few pointers:
+The installation script will prompt for several questions. It is useful to prepare for some of the answers beforehand to expedite the installation process. Here are a few pointers:
 
 * make sure you know what region you're running in (e.g. `us-west-2`)
 * decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine
 * find out whether your favorite editor is installed on host virtual machine
-* be sure to know how to create a static IP address for your virtual machine (AWS calls this _Elastic IP_)
-* you will be asked to provide an host domain that points to your EC2 instance; at the time installation all you need is a name (i.e., the domain does not need to exist)
-* 
+* create a static IP address for your virtual machine (AWS calls this _Elastic IP_); find a short set of instructions below
+* you will be asked to provide an host domain that points to your EC2 instance; at the time of installation that domain (or _record set_) does not have to be configured in _Route 53_.
+
+#### Create an _Elastic IP_ for your VM
+1. Go to _AWS console_, _Compute_,  _EC2 Dashboard_. There click *running instances*. 
+2. Find your VM and make it active by clicking anywhere in that line.
+3. Under the drop-down *Actions*, go to *Networking*, *Manage IP Addreses*.
+4. Click on *Allocate an Elastic IP*. It will automatically create an IP address and show it on the screen.
+5. Write down that _Elastic IP_. At this point, whatever IP address is shown under IPv4 Public IP for your VM is not the current instance's IP address. Next you need to associate the _Elastic IP_ with your VM.
+6. Back in _EC2 Dashboard_ go to *Elastic IPs*. The IP address just created should be in that list. Check it and under *Actions*, *Associate*, choose resource type "Instance", and choose your EC2 (e.g., searching by its name).
+7. In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
+
 
 ### Launch an instance of a AWS EC2 virtual machine (VM)
 
-Use the AWS console or command line tool to create a host virtual machine. We will refer to this machine as the VM throughout the rest of the documentation. Ultimately the performace and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
+Use the AWS console or command line tool to create a host virtual machine. We will refer to this machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
 
 * Ubuntu Server 16.04
 * r4.xlarge
