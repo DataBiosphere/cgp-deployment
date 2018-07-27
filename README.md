@@ -36,7 +36,7 @@ The installation script will prompt for several question. It is useful prepare f
 
 ### Launch an instance of a AWS EC2 virtual machine (VM)
 
-Use the AWS console or command line tool to create a host virtual machine. We will refer to this as the host VM throughout the rest of the documentation. Ultimately the performace and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
+Use the AWS console or command line tool to create a host virtual machine. We will refer to this machine as the VM throughout the rest of the documentation. Ultimately the performace and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
 
 * Ubuntu Server 16.04
 * r4.xlarge
