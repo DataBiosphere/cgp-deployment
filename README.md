@@ -69,10 +69,17 @@ Make sure you do the following:
 	
 The following security settings are recommended:
 
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
+| Type | Port | Source | Description |
+| --- | --- | --- | --- |
+| HTTP | 80 | 0.0.0.0/0 | |
+| HTTP | 80 | ::/0 | |
+| HTTPS | 443 | 0.0.0.0/0 | |
+| HTTPS | 443 | ::/0 | |
+| All TCP | 0 - 65535 | _VM's Elastic IP_ | |
+| All TCP | 0 = 65535 | _Your Security Group ID_ | | 
+| Custom TCP Rule | 9000 | _VM's Elastic IP_ | webservice port |
+| Custom TCP Rule | 9200 | _VM's Elastic IP_ | Elasticsearch |
+| SSH | 22 | 0.0.0.0/0 | |
 
 
 #### Adding private SSH key to your VM
