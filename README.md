@@ -57,17 +57,8 @@ You should make a note of your security group name and ID and ensure you can con
 
 ### AWS Tasks
 
-Make sure you do the following:
-
-* assign an Elastic IP (a static IP address) to your instance
-* open inbound ports on your security group
-    * 80 <- world
-    * 22 <- world
-    * 443 <- world
-    * all TCP <- the elastic IP of the VM (Make sure you add /32 to the Elastic IP)
-    * all TCP <- the security group itself
-	
-The following security settings are recommended:
+1. Assign an Elastic IP (a static IP address) to your instance.
+2. Open inbound ports on your security group. Use the table below as a guide. Make sure you add /32 to the Elastic IP.
 
 | Type | Port | Source | Description |
 | --- | --- | --- | --- |
@@ -75,10 +66,10 @@ The following security settings are recommended:
 | HTTP | 80 | ::/0 | |
 | HTTPS | 443 | 0.0.0.0/0 | |
 | HTTPS | 443 | ::/0 | |
-| All TCP | 0 - 65535 | _VM's Elastic IP_ | |
-| All TCP | 0 = 65535 | _Your Security Group ID_ | | 
-| Custom TCP Rule | 9000 | _VM's Elastic IP_ | webservice port |
-| Custom TCP Rule | 9200 | _VM's Elastic IP_ | Elasticsearch |
+| All TCP | 0 - 65535 | _Your VM's Elastic IP_ | |
+| All TCP | 0 - 65535 | _Your Security Group ID_ | | 
+| Custom TCP Rule | 9000 | _Your VM's Elastic IP_ | webservice port |
+| Custom TCP Rule | 9200 | _Your VM's Elastic IP_ | Elasticsearch |
 | SSH | 22 | 0.0.0.0/0 | |
 
 
