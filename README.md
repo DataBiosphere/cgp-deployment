@@ -25,7 +25,14 @@ These directions below assume you are using AWS.  We will include additional clo
 
 ### Collecting Information
 
-Make sure you know what region you're running in (e.g. `us-west-2`).
+The installation script will prompt for several question. It is useful prepare for some of the answers beforehand to expedite the installation process. Here are a few pointers:
+
+* make sure you know what region you're running in (e.g. `us-west-2`)
+* decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine
+* find out whether your host virtual machine will have you favorite editor installed
+* be sure to know how to create a static IP address for your virtual machine (AWS calls this _Elastic IP address_)
+* you will be asked to provide an host domain that points to your EC2 instance; at the time installation all you need is a name (i.e., the domain does not need to exist)
+* 
 
 ### Starting an AWS VM
 
