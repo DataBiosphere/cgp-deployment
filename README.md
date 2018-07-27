@@ -29,20 +29,27 @@ The installation script will prompt for several question. It is useful prepare f
 
 * make sure you know what region you're running in (e.g. `us-west-2`)
 * decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine
-* find out whether your host virtual machine will have you favorite editor installed
-* be sure to know how to create a static IP address for your virtual machine (AWS calls this _Elastic IP address_)
+* find out whether your favorite editor is installed on host virtual machine
+* be sure to know how to create a static IP address for your virtual machine (AWS calls this _Elastic IP_)
 * you will be asked to provide an host domain that points to your EC2 instance; at the time installation all you need is a name (i.e., the domain does not need to exist)
 * 
 
-### Starting an AWS VM
+### Launch an instance of a AWS EC2 virtual machine (VM)
 
-Use the AWS console or command line tool to create a host. For example:
+Use the AWS console or command line tool to create a host virtual machine. We will refer to this as the host VM throughout the rest of the documentation. Ultimately the performace and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
 
 * Ubuntu Server 16.04
 * r4.xlarge
 * 250GB disk
 
-We will refer to this as the host VM throughout the rest of the documentation. It will run the Docker containers for all of the components listed below.
+In `prod` mode the installation will run the Docker containers for all of the components listed below.
+
+For development work the following specifications have worked well in the past:
+* Ubuntu Server 16.04
+* m5.xlarge
+* 80 GB disk
+
+In `dev` mode Docker containers will be built from source and the VM will run them during testing.
 
 You should make a note of your security group name and ID and ensure you can connect via ssh.
 
@@ -59,10 +66,18 @@ Make sure you do the following:
     * 443 <- world
     * all TCP <- the elastic IP of the VM (Make sure you add /32 to the Elastic IP)
     * all TCP <- the security group itself
+	
+The following security settings are recommended:
+
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
+
 
 #### Adding private SSH key to your VM
 
-Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then do `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
+Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then set privileges to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
 
 #### TODO:
 
