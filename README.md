@@ -33,7 +33,7 @@ The installation script will prompt for several questions. It is useful to prepa
 * create a static IP address for your virtual machine (AWS calls this _Elastic IP_); find a short set of instructions below
 * you will be asked to provide an host domain that points to your EC2 instance; at the time of installation that domain (or _record set_) does not have to be configured in _Route 53_.
 
-#### Create an _Elastic IP_ for your VM
+#### <a name="makeip"></a>Create an _Elastic IP_ for your VM 
 1. Go to _AWS console_, _Compute_,  _EC2 Dashboard_. There click *running instances*. 
 2. Find your VM and make it active by clicking anywhere in that line.
 3. Under the drop-down *Actions*, go to *Networking*, *Manage IP Addreses*.
@@ -66,7 +66,7 @@ You should make a note of your security group name and ID and ensure you can con
 
 ### AWS Tasks
 
-1. Assign an Elastic IP (a static IP address) to your instance.
+1. Assign an \textit{Elastic IP} (a static IP address) to your instance [as described here](#makeip).
 2. Open inbound ports on your security group. Use the table below as a guide. Make sure you add /32 to the Elastic IP.
 
 | Type | Port | Source | Description |
