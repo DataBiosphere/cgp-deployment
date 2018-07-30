@@ -58,7 +58,7 @@ For development work the following specifications have worked well in the past:
 * m5.xlarge
 * 80 GB disk
 
-In `dev` mode Docker containers will be built from source and the VM will run them during testing. You should make a note of your security group name and ID and ensure you can connect via ssh.
+In `dev` mode Docker containers will be built from source and the VM will run them during testing. You should make a note of your security group name and ID and ensure you can [connect via ssh](#makeip).
 
 **Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.
 
