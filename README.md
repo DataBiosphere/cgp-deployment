@@ -35,7 +35,7 @@ The installation script will prompt for several questions. It is useful to prepa
 
 ### Launch an instance of a AWS EC2 virtual machine (VM)
 
-Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#makeip). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
+Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#sshconnect). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
 
 * Ubuntu Server 16.04
 * r4.xlarge
@@ -64,7 +64,7 @@ Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the sa
 4. Click on *Allocate an Elastic IP*. It will automatically create an IP address and show it on the screen.
 5. Write down that _Elastic IP_. At this point, whatever IP address is shown under IPv4 Public IP for your VM is not the current instance's IP address. Next you need to associate the _Elastic IP_ with your VM.
 6. Back in _EC2 Dashboard_ go to *Elastic IPs*. The IP address just created should be in that list. Check it and under *Actions*, *Associate*, choose resource type "Instance", and choose your EC2 (e.g., searching by its name).
-7. In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
+7.  <a name="sshconnect"></a>In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
 
 
 #### Configuring the ports in your VM
@@ -109,7 +109,7 @@ The `install_bootstrap` script will ask you to configure each service interactiv
 * Boardwalk
   * Install in prod mode
 * Common
-  * Installing in `dev`mode will use letsencrypt's staging service, which won't exhaust your certificate's limit, but will install fake ssl certificates. `prod` mode will install official SSL certificates.  
+  * Installing in `dev`mode will use letsencrypt's staging service, which won't exhaust your certificate's limit, but will install fake ssl certificates. `prod` mode will install official SSL certificates.
   
   
 Once the installer completes, the system should be up and running. Congratulations! See `docker ps` to get an idea of what's running.
