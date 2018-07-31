@@ -1,0 +1,9 @@
+sequenceDiagram
+participant Boardwalk UI
+participant DashboardService
+Boardwalk UI ->> Boardwalk UI: User clicks Export to FC Button
+Boardwalk UI ->> DashboardService: Ajax request to Dashboard Service requesting signed URL to BDBag
+DashboardService ->> DashboardService: Dashboard Service generates BDBag
+DashboardService ->> Boardwalk UI: Returns presigned URL to BDBag
+Boardwalk UI ->> FireCloud: Redirects, in a new tab, to https://saturnui?bag=selfSignedUrl
+

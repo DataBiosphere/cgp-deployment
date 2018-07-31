@@ -1,0 +1,19 @@
+sequenceDiagram
+participant Boardwalk UI
+participant Dashboard
+participant DashboardService
+participant User DB
+Boardwalk UI ->> Google : User clicks Login Button
+Google ->> Dashboard: Google returns authorization code
+Dashboard ->> Google: Using Authorization code, request access and refresh token
+Dashboard ->> Dashboard: Get email from access token
+Dashboard ->> User DB: Store email (key) and tokens
+Note right of User DB: Is this necessary? I think so, in order to refresh the access token.
+Dashboard ->> Authorization Service: Send access token to Auth Service
+Authorization Service ->> Authorization Service: Get email from token, check if email is whitelisted
+Authorization Service ->> Dashboard: 200 or 403 status code based on whether email is whitelisted
+alt is 200
+Dashboard ->> Boardwalk UI: Redirect to Home Page
+else
+Dashboard ->> Boardwalk UI: Redirect to Unauthorized Page
+end

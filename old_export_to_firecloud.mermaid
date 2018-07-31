@@ -1,0 +1,30 @@
+sequenceDiagram
+participant Boardwalk UI
+participant Dashboard
+participant User DB
+participant DashboardService
+Boardwalk UI ->> Dashboard: GET https://commons.ucsc-cgp-dev.org/boardwalk
+Dashboard ->> Boardwalk UI: index.html
+loop Load Boardwalk SPA
+   Boardwalk UI ->> Dashboard: GET css, js, & html templates
+end
+Boardwalk UI ->> DashboardService: Request data, facets
+DashboardService ->> ElasticSearch: Fetch data, facets
+ElasticSearch ->> DashboardService: Return data, facets
+DashboardService ->> Boardwalk UI: Return data, facets
+Boardwalk UI ->> Google: User Clicks Login Button, redirects to Google
+Google ->> Dashboard: Authorization Code Sent to  Dashboard
+Dashboard ->> Google: Dashboard Requests Access and Refresh Tokens using Authorization Code
+Google ->> Dashboard: Google responds with Access and Refresh Tokens
+Dashboard ->> User DB: Store user email, access and refresh tokens
+Dashboard ->> Boardwalk UI: Encrypt Flask session cookie with email
+Boardwalk UI ->> Dashboard: User clicks Export to FC, request sent with Flask cookie
+Dashboard ->> Dashboard: Get email by decrypting Flask session cookie
+Dashboard ->> User DB: Look up User row
+User DB ->> Dashboard: Return user row
+Dashboard ->> Google: Get refresh token from user row, and request new access token
+Dashboard ->> DashboardService: Call /repository/files/export/firecloud with access token
+DashboardService ->> DashboardService: Create BdBag
+DashboardService ->> Bagit FC Lambda: Post BDBag
+Bagit FC Lambda ->> FireCloud: Read BDBag, invoke FireCloud APIs
+
