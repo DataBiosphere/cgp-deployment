@@ -21,7 +21,7 @@ services:
     #image: quay.io/ucsc_cgl/dashboard-service:1.0.0
     volumes:
       - ~/dcc-dashboard-service/logs:/app/log
-    build: dcc-dashboard-service
+    build: azul/webservice
     ports:
       - "80"
       - "443"
