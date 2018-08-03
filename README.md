@@ -51,11 +51,6 @@ For development work the following specifications have worked well in the past:
 Setting up *Common* in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates. Setting up *Boardwalk* in `dev` mode will cause the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` to be built from source (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
 
 
-#### Adding private SSH key to your VM
-
-Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then set privileges to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
-
-
 #### <a name="makeip"></a>Create and assign an _Elastic IP_ for your VM 
 1. Go to _AWS console_, _Compute_,  _EC2 Dashboard_. There click *running instances*. 
 2. Find your VM and make it active by clicking anywhere in that line.
@@ -65,6 +60,10 @@ Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the sa
 6. Back in _EC2 Dashboard_ go to *Elastic IPs*. The IP address just created should be in that list. Check it and under *Actions*, *Associate*, choose resource type "Instance", and choose your EC2 (e.g., searching by its name).
 7.  <a name="sshconnect"></a>In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
 
+
+#### Adding private SSH key to your VM
+
+Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then set privileges to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
 
 #### Configuring the ports in your VM
 Open inbound ports on your security group. Use the table below as a guide. Make sure you add /32 to the *Elastic IP*.
