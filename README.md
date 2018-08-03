@@ -48,7 +48,7 @@ For development work the following specifications have worked well in the past:
 * m5.large
 * 60 GB disk
 
-In `dev` mode Docker containers will be built from source and the VM will run them during testing. (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details)
+In `dev` mode Docker containers will be built from source and the VM will run them during testing. (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). If work is planned only in *Boardwalk*, but not in common, and particularly if real certificates are needed during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
 
 
 #### Adding private SSH key to your VM
