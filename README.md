@@ -48,7 +48,7 @@ For development work the following specifications have worked well in the past:
 * m5.xlarge
 * 80 GB disk
 
-In `dev` mode Docker containers will be built from source and the VM will run them during testing. 
+In `dev` mode Docker containers will be built from source and the VM will run them during testing. (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details)
 
 **Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.
 
