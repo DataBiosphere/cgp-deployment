@@ -48,7 +48,7 @@ For development work the following specifications have worked well in the past:
 * m5.large
 * 60 GB disk
 
-Setting up *Common* in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates. Setting up *Boardwalk* in `dev` mode will cause the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` to be built from source (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
+Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates. Setting up *Boardwalk* to run in `dev` mode will cause the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` to be built from source (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
 
 
 #### <a name="makeip"></a>Create and assign an _Elastic IP_ for your VM 
