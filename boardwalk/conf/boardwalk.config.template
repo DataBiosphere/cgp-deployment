@@ -4,6 +4,7 @@ google_site_verification_code= {{ GOOGLE_SITE_VERIFICATION_CODE }}
 dcc_dashboard_host={{ DCC_DASHBOARD_HOST  }}
 dcc_dashboard_protocol={{ DCC_DASHBOARD_PROTOCOL  }}
 dcc_dashboard_service={{ DCC_DASHBOARD_SERVICE  }}
+dos_dss_service={{DOS_DSS_SERVICE}}
 database_url={{ DATABASE_URL }}
 es_domain={{ ES_DOMAIN }}
 es_port={{ ES_PORT }}
