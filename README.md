@@ -35,7 +35,7 @@ The installation script will prompt for several questions. It is useful to prepa
 
 ### Launch an instance of a AWS EC2 virtual machine (VM)
 
-Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#sshconnect). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment:
+Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#sshconnect). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. For example the following specification has worked well for a small-scale production environment (**Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.):
 
 * Ubuntu Server 16.04
 * r4.xlarge
@@ -45,12 +45,11 @@ In `prod` mode the installation will run the Docker containers for all of the co
 
 For development work the following specifications have worked well in the past:
 * Ubuntu Server 16.04
-* m5.xlarge
-* 80 GB disk
+* m5.large
+* 60 GB disk
 
 In `dev` mode Docker containers will be built from source and the VM will run them during testing. (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details)
 
-**Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.
 
 #### Adding private SSH key to your VM
 
