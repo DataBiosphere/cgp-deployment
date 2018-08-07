@@ -37,22 +37,20 @@ The installation script will prompt for several questions. It is useful to prepa
 
 Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#sshconnect). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. (**Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.)
 
-#### Installing in `prod` mode
-As an example the following specification has worked well for a small-scale production environment :
+#### Configuring the ports in your VM
+Open inbound ports on your security group. Use the table below as a guide. Make sure you add /32 to the *Elastic IP*.
 
-* Ubuntu Server 16.04
-* r4.xlarge
-* 250GB disk
-
-In `prod` mode the installation will run the Docker containers for all of the components listed below from the respective images from *Quay.io*. The `nginx` docker will be built from the *nginx-image* directory.
-
-#### Installing in `dev` mode
-For development work the following specifications have worked well in the past:
-* Ubuntu Server 16.04
-* m5.large
-* 60 GB disk
-
-Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates. Setting up *Boardwalk* to run in `dev` mode will first build then run the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` from the images (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). In addition, the `nginx` image is built from the *nginx-dev* directory. If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
+| Type | Port | Source | Description |
+| --- | --- | --- | --- |
+| HTTP | 80 | 0.0.0.0/0 | |
+| HTTP | 80 | ::/0 | |
+| HTTPS | 443 | 0.0.0.0/0 | |
+| HTTPS | 443 | ::/0 | |
+| All TCP | 0 - 65535 | _Your VM's Elastic IP_ | |
+| All TCP | 0 - 65535 | _Your Security Group ID_ | | 
+| Custom TCP Rule | 9000 | _Your VM's Elastic IP_ | webservice port |
+| Custom TCP Rule | 9200 | _Your VM's Elastic IP_ | Elasticsearch |
+| SSH | 22 | 0.0.0.0/0 | |
 
 
 #### <a name="makeip"></a>Create and assign an _Elastic IP_ for your VM 
@@ -69,20 +67,24 @@ Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://lets
 
 Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then set privileges to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
 
-#### Configuring the ports in your VM
-Open inbound ports on your security group. Use the table below as a guide. Make sure you add /32 to the *Elastic IP*.
 
-| Type | Port | Source | Description |
-| --- | --- | --- | --- |
-| HTTP | 80 | 0.0.0.0/0 | |
-| HTTP | 80 | ::/0 | |
-| HTTPS | 443 | 0.0.0.0/0 | |
-| HTTPS | 443 | ::/0 | |
-| All TCP | 0 - 65535 | _Your VM's Elastic IP_ | |
-| All TCP | 0 - 65535 | _Your Security Group ID_ | | 
-| Custom TCP Rule | 9000 | _Your VM's Elastic IP_ | webservice port |
-| Custom TCP Rule | 9200 | _Your VM's Elastic IP_ | Elasticsearch |
-| SSH | 22 | 0.0.0.0/0 | |
+#### Installing in `prod` mode
+As an example the following specification has worked well for a small-scale production environment :
+
+* Ubuntu Server 16.04
+* r4.xlarge
+* 250GB disk
+
+In `prod` mode the installation will run the Docker containers for all of the components listed below from the respective images from *Quay.io*. The `nginx` docker will be built from the *nginx-image* directory.
+
+
+#### Installing in `dev` mode
+For development work the following specifications have worked well in the past:
+* Ubuntu Server 16.04
+* m5.large
+* 60 GB disk
+
+Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates. Setting up *Boardwalk* to run in `dev` mode will first build then run the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` from the images (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). In addition, the `nginx` image is built from the *nginx-dev* directory. If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
 
 
 #### TODO:
