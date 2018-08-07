@@ -19,23 +19,24 @@ These are related projects that are either already setup and available for use o
 * [Dockstore](https://dockstore.org): our workflow and tool sharing platform
 * [Toil](https://github.com/BD2KGenomics/toil): our workflow engine, these workflows are shared via Dockstore
 
-## Installing the Platform
 
-These directions below assume you are using AWS.  We will include additional cloud instructions as `cgp-deployment` matures.
 
-### Collecting Information
-
-The installation script will prompt for several questions. It is useful to prepare for some of the answers beforehand to expedite the installation process. Here are a few pointers:
-
-* make sure you know what region you're running in (e.g. `us-west-2`)
-* decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine
-* find out whether your favorite editor is installed on host virtual machine
-* create a static IP address for your virtual machine (AWS calls this _Elastic IP_); find a short set of instructions below
-* you will be asked to provide an host domain that points to your EC2 instance; at the time of installation that domain (or _record set_) does not have to be configured in _Route 53_.
 
 ### Launch an instance of a AWS EC2 virtual machine (VM)
 
 Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#sshconnect). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. (**Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.)
+
+The following specification has worked well for a small-scale production environment :
+
+* Ubuntu Server 16.04
+* r4.xlarge
+* 250GB disk
+
+For development work the following specifications have worked well in the past:
+* Ubuntu Server 16.04
+* m5.large
+* 60 GB disk
+
 
 #### Configuring the ports in your VM
 Open inbound ports on your security group. Use the table below as a guide. Make sure you add /32 to the *Elastic IP*.
@@ -63,29 +64,45 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 7.  <a name="sshconnect"></a>In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
 
 
-#### Adding private SSH key to your VM
+#### Adding a private SSH key to your VM
 
 Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then set privileges to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
 
 
+## Installing the Platform (CGP)
+
+These directions below assume you are using AWS.  We will include additional cloud instructions as `cgp-deployment` matures.
+
+
+### Collecting Information
+
+The installation script will prompt for several questions. It is useful to prepare for some of the answers beforehand to expedite the installation process. Here are a few pointers:
+
+* make sure you know what region you're running in (e.g. `us-west-2`)
+* decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine
+* find out whether your favorite editor is installed on host virtual machine
+* create a static IP address for your virtual machine (AWS calls this _Elastic IP_); find a short set of instructions below
+* you will be asked to provide an host domain that points to your EC2 instance; at the time of installation that domain (or _record set_) does not have to be configured in _Route 53_.
+
+### Running the Installer
+
+Once the above setup is done, clone this repository onto your server and run the bootstrap script. If needed checkout a particular branch or release tag you're interested after you execute the `git clone` command.
+
+    $ git clone https://github.com/DataBiosphere/cgp-deployment.git
+    $ cd cgp-deployment
+    $ sudo bash install_bootstrap
+
+The `install_bootstrap` script will ask you to configure each service interactively. Specifically, you need to decide on whether you require a production (`prod` mode) or a development (`dev` mode) environment.
+
 #### Installing in `prod` mode
-Once the above steps have been completed we are now ready to install the components of the CGP. As an example the following specification has worked well for a small-scale production environment :
-
-* Ubuntu Server 16.04
-* r4.xlarge
-* 250GB disk
-
+Once the above steps have been completed we are now ready to install the components of the CGP.
 In `prod` mode the installation will run the Docker containers for all of the components listed below from the respective images from *Quay.io*. The `nginx` docker will be built from the *nginx-image* directory.
 
 
 #### Installing in `dev` mode
-For development work the following specifications have worked well in the past:
-* Ubuntu Server 16.04
-* m5.large
-* 60 GB disk
-
-Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates. Setting up *Boardwalk* to run in `dev` mode will first build then run the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` from the images (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). In addition, the `nginx` image is built from the *nginx-dev* directory. If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
-
+Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL certificates, which won't exhaust your certificate's limit. Setting up *Boardwalk* to run in `dev` mode will first build then run the Docker containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`, `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` from the images (see [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode) for more details). In addition, the `nginx` image is built from the *nginx-dev* directory. If your work requires real SSL certificates during development, it is recommended to set up *Common* in `prod` mode, and *Boardwalk* in `dev` mode.
+  
+Once the installer completes, the system should be up and running. Congratulations! See `docker ps` to get an idea of what's running.
 
 #### TODO:
 
@@ -96,27 +113,7 @@ Setting up *Common* to run in `dev` mode will cause [Let's Encrypt](https://lets
 
 See the Boardwalk [README](boardwalk/README.md) for details.
 
-### Running the Installer
 
-Once the above setup is done, clone this repository onto your server and run the bootstrap script.
-
-    $ git clone https://github.com/DataBiosphere/cgp-deployment.git
-    $ cd cgp-deployment
-    $ sudo bash install_bootstrap
-
-Remember to checkout the particular branch or release tag that you're interested in if it's necessary.
-
-#### Installer Question Notes
-
-The `install_bootstrap` script will ask you to configure each service interactively.
-
-* Boardwalk
-  * Install in prod mode
-* Common
-  * Installing in `dev`mode will use letsencrypt's staging service, which won't exhaust your certificate's limit, but will install fake ssl certificates. `prod` mode will install official SSL certificates.
-  
-  
-Once the installer completes, the system should be up and running. Congratulations! See `docker ps` to get an idea of what's running.
 
 ## Post-Installation
 
