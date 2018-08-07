@@ -76,13 +76,16 @@ These directions below assume you are using AWS.  We will include additional clo
 
 ### Collecting Information
 
-The installation script (`install_bootstrap`) will prompt for several questions. It is useful to prepare for some of the answers beforehand to expedite the installation process. Here are a few pointers:
+The installation script (`install_bootstrap`) will prompt for several questions. To expedite the installation process it is useful to prepare for some of the answers beforehand. Here are a few pointers:
 
 * make sure you know what AWS region your VM runs in (e.g. `us-west-2`)
 * decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine (see above for recommendations)
 * find out whether your favorite editor is installed on the VM
 * create a static IP address for your VM (AWS calls this _Elastic IP_); find a short set of instructions above
 * you will be asked to provide an host domain that points to your EC2 instance; you need to know the name of the domain but at the time of installation the domain (or _record set_) does not have to be configured in _Route 53_
+* _Boardwalk_ has functionality to export metadata to Broad's FireCloud; in order to use it you need to provide your Google Cloud Platform credentials; specifically you need the Google Client ID and the Google Client Secret (it's okay to leave the Google site verfication code empty)
+* all metadata reside in an Elasticsearch database; make sure you have the domain name of that Elasticsearch instance handy
+* have the domain name of the _dos-dss server_ handy
 
 ### Running the Installer
 
