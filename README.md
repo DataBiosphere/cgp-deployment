@@ -2,7 +2,7 @@
 
 ## About
 
-This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform (CGP) for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
 
 ## Components
 
@@ -69,7 +69,7 @@ Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the sa
 
 
 #### Installing in `prod` mode
-As an example the following specification has worked well for a small-scale production environment :
+Once the above steps have been completed we are now ready to install the components of the CGP. As an example the following specification has worked well for a small-scale production environment :
 
 * Ubuntu Server 16.04
 * r4.xlarge
