@@ -17,7 +17,6 @@ These components are setup with the install process available in this repository
 Related projects that are either already setup and available for use on the web or are used by components above:
 
 * [Dockstore](https://dockstore.org): our workflow and tool sharing platform
-
 * Set-up directions are currently specific to AWS, but usage of other cloud service providers is planned for the future.
 
 
@@ -84,7 +83,7 @@ The installation script (`install_bootstrap`) will prompt for several questions.
 
 ### Running the Installer
 
-Once the above setup is done, clone this repository onto your server and run the bootstrap script. If needed checkout a particular branch or release tag you're interested after you execute the `git clone` command.
+Be sure to set your branch to `feature/commons` as these instruction are specific to this branch. Once the above setup is done, clone this repository onto your server and run the bootstrap script. If needed checkout a particular branch or release tag you're interested after you execute the `git clone` command.
 
     $ git clone https://github.com/DataBiosphere/cgp-deployment.git
     $ cd cgp-deployment
