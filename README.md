@@ -5,8 +5,7 @@
 This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://commons.ucsc-cgp.org) Computational Genomics Platform (CGP) for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
 
 ## Components
-
-The system has components fulfilling a range of functions, all of which are open source and can be used independently or together.
+The system has components fulfilling a range of functions, all of which are open source and can be used independently or together. The installation instructions are currently specific to AWS, but usage of other cloud service providers is planned for the future.
 
 ![Computational Genomics Platform architecture](docs/dcc-arch.png)
 
@@ -17,10 +16,9 @@ These components are setup with the install process available in this repository
 Related projects that are either already setup and available for use on the web or are used by components above:
 
 * [Dockstore](https://dockstore.org): our workflow and tool sharing platform
-* Set-up directions are currently specific to AWS, but usage of other cloud service providers is planned for the future.
 
 
-### Launch an instance of a AWS EC2 virtual machine (VM)
+### Launch an instance of an AWS EC2 virtual machine (VM)
 
 Use the AWS console or command line tool to create a host virtual machine. While you do this make a note of your security group name and ID and ensure you can [connect via ssh](#sshconnect). We will refer to this virtual machine as the VM throughout the rest of the documentation. Ultimately the performance and size of the VM depends on the traffic you expect. (**Note:** We have had problems when uploading big files to Virginia (~25GB). If possible, set up your AWS anywhere else but Virginia.)
 
@@ -62,28 +60,25 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 7.  <a name="sshconnect"></a>In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
 
 
-#### Adding a private/public key pair to your VM
+#### Adding a private/public key pair to your local machine
+On your local machine add the key pair file under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connect to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
-In the VM add your key pair file under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connect to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
-
-## Installing the Platform (CGP)
+## Installing the Platform
 ### Collecting Information
-
 The installation script (`install_bootstrap`) will prompt for several questions. To expedite the installation process it is useful to prepare for some of the answers beforehand. Here are a few pointers:
 
-* make sure you know what AWS region your VM runs in (e.g. `us-west-2`)
-* decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine (see above for recommendations)
-* find out whether your favorite editor is installed on the VM
-* create a static IP address for your VM (AWS calls this _Elastic IP_); find a short set of instructions above
-* you will be asked to provide an host domain that points to your EC2 instance; you need to know the name of the domain but at the time of installation the domain (or _record set_) does not have to be configured in _Route 53_
-* _Boardwalk_ has functionality to export metadata to Broad's FireCloud; in order to use it you need to provide your Google Cloud Platform credentials; specifically you need the Google Client ID and the Google Client Secret (it's okay to leave the Google site verfication code empty)
-* all metadata reside in an Elasticsearch database; make sure you have the domain name of that Elasticsearch instance handy
-* have the domain name of the _dos-dss server_ handy
+* Make sure you know what AWS region your VM runs in (e.g. `us-west-2`).
+* Decide whether you want to create an instance for development or production as it might impact the size and therefore the cost of the host virtual machine (see above for recommendations).
+* Find out whether your favorite editor is installed on the VM.
+* Create a static IP address for your VM (AWS calls this _Elastic IP_). You find a short set of instructions above.
+* You will be asked to provide an host domain that points to your EC2 instance. You need to know the name of the domain but at the time of installation the domain (or _record set_) does not have to be configured in _Route 53_.
+* _Boardwalk_ has functionality to export metadata to Broad's FireCloud. In order to use it you need to provide your Google Cloud Platform credentials. Specifically you need the Google Client ID and the Google Client Secret (it's okay to leave the Google site verfication code empty).
+* All metadata reside in an Elasticsearch database. Make sure you have the domain name of that Elasticsearch instance handy.
+* Have the domain name of the _dos-dss server_ handy.
 
 ### Running the Installer
-
-Once the above setup is done, clone this repository onto your server and run the bootstrap script. Be sure to set your branch to `feature/commons` as these instruction are specific to this branch.
+Once you have collected the above information, clone the repository on VM and run the bootstrap script. Be sure to set your branch to `feature/commons` as these instruction are specific to this branch.
 
     $ git clone https://github.com/DataBiosphere/cgp-deployment.git
     $ cd cgp-deployment
