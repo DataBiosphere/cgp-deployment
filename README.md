@@ -2,7 +2,7 @@
 
 ## About
 
-This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://ucsc-cgl.org) Computational Genomics Platform (CGP) for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
+This repository contains our Docker-compose and setup bootstrap scripts used to create a deployment of the [UCSC Genomic Institute's](http://commons.ucsc-cgp.org) Computational Genomics Platform (CGP) for AWS. It uses, supports, and drives development of several key GA4GH APIs and open source projects. In many ways it is the generalization of the [PCAWG](https://dcc.icgc.org/pcawg) cloud infrastructure developed for that project and a potential reference implementation for the [NIH Commons](https://datascience.nih.gov/commons) concept.
 
 ## Components
 
@@ -14,12 +14,11 @@ These components are setup with the install process available in this repository
 
 * [Boardwalk](boardwalk/README.md): our file browsing portal on top of Redwood
 
-These are related projects that are either already setup and available for use on the web or are used by components above:
+Related projects that are either already setup and available for use on the web or are used by components above:
 
 * [Dockstore](https://dockstore.org): our workflow and tool sharing platform
-* [Toil](https://github.com/BD2KGenomics/toil): our workflow engine, these workflows are shared via Dockstore
 
-
+* Set-up directions are currently specific to AWS, but usage of other cloud service providers is planned for the future.
 
 
 ### Launch an instance of a AWS EC2 virtual machine (VM)
@@ -64,16 +63,12 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 7.  <a name="sshconnect"></a>In _EC2 Dashboard_ make your VM active by clicking it. Then click _Connect_ on top. The example in that window shows you how to ssh into your VM from a terminal.
 
 
-#### Adding a private SSH key to your VM
+#### Adding a private/public key pair to your VM
 
-Add your private ssh key under `~/.ssh/<your_key>.pem`, this is typically the same key that you use to SSH to your host VM, regardless it needs to be a key created on the AWS console so Amazon is aware of it. Then set privileges to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so your key is not publicly viewable.
+In the VM add your key pair under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connec to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
 
 ## Installing the Platform (CGP)
-
-These directions below assume you are using AWS.  We will include additional cloud instructions as `cgp-deployment` matures.
-
-
 ### Collecting Information
 
 The installation script (`install_bootstrap`) will prompt for several questions. To expedite the installation process it is useful to prepare for some of the answers beforehand. Here are a few pointers:
