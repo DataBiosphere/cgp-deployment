@@ -64,7 +64,7 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 
 #### Adding a private/public key pair to your VM
 
-In the VM add your key pair under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connec to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
+In the VM add your key pair file under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connect to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
 
 ## Installing the Platform (CGP)
