@@ -83,7 +83,7 @@ The installation script (`install_bootstrap`) will prompt for several questions.
 
 ### Running the Installer
 
-Be sure to set your branch to `feature/commons` as these instruction are specific to this branch. Once the above setup is done, clone this repository onto your server and run the bootstrap script. If needed checkout a particular branch or release tag you're interested after you execute the `git clone` command.
+Once the above setup is done, clone this repository onto your server and run the bootstrap script. Be sure to set your branch to `feature/commons` as these instruction are specific to this branch. If needed checkout a particular branch or release tag you're interested after you execute the `git clone` command.
 
     $ git clone https://github.com/DataBiosphere/cgp-deployment.git
     $ cd cgp-deployment
