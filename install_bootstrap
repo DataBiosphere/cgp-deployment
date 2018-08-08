@@ -40,9 +40,9 @@ MSG
 function check_for_repo {
     if [ ! -d "$2" ]; then
         git clone "$1" "$2"
-	cd "$2"
-	git checkout feature/commons
-	cd ..
+        cd "$2"
+        git checkout feature/commons
+        cd ..
     fi
 }
 
@@ -221,7 +221,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       dcc_dashboard_port=8080
 
       if [ -f boardwalk_launcher_config/boardwalk.config ] ; then
-	  source <(jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" boardwalk_launcher_config/boardwalk.config)
+          source <(jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" boardwalk_launcher_config/boardwalk.config)
       fi
 
       echo "Do you want to run boardwalk in dev mode or prod? [dev/prod]"
