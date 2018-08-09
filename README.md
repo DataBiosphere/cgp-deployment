@@ -64,7 +64,7 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 On your local machine add the key pair file under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connect to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
 #### Create an AWS S3 bucket for persistent storage of BDBag 
-The NIH Data Commons (DCPPC) uses BDBags to move metadata from one platform to another. In _Boardwalk_ a BDBag is created by clicking _Export to FireCloud_. Once clicked the selected metadata are packaged in a BDBag, and the bag is uploaded to a S3 bucket. Therefore, part of the installation process is creating a S3 bucket.
+The NIH Data Commons (DCPPC) uses BDBags to move metadata from one platform to another. In _Boardwalk_ a BDBag is created by clicking _Export to FireCloud_. Once clicked the selected metadata are packaged in a BDBag, and the bag is uploaded to an S3 bucket. Therefore, part of the installation process is creating an S3 bucket.
 Follow these steps to create it
 
 1. In the AWS console head over to _S3_.
