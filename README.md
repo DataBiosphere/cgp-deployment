@@ -63,6 +63,24 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 #### Adding a private/public key pair to your local machine
 On your local machine add the key pair file under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connect to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
+#### Create an AWS S3 bucket for persistent storage of BDBag 
+The NIH Data Commons (DCPPC) uses BDBags to move metadata from one platform to another. In _Boardwalk_ a BDBag is created by clicking _Export to FireCloud_. Once clicked the selected metadata are packaged in a BDBag, and the bag is uploaded to an S3 bucket. Therefore, part of the installation process is creating an S3 bucket.
+Follow these steps to create it
+
+1. In the AWS console head over to _S3_.
+2. Click _Create bucket_. Name your bucket (needs to be a unique), set the region and click _Next_. Take note of the bucket name, you'll be asked for it later during the installation.
+3. In the next two tabs, _Configure options_ and _Set permissions_, leave the default settings and click _Next_.
+4. Review the settings, and click _Create bucket_.
+
+Next we want to limit the lifecycle of objects in that bucket to 1 day (technically is only needs to exists for a few minutes). To do that, in _Amazon S3_
+
+1. Search for the bucket you just created and click on it.
+2. Go the _Management_ tab, and in there to the tab _Lifecycle_, _+ Add lifecycle rule_.
+3. Name your rule (e.g., "limit to 1 day") and click _Next_.
+4. Accept the default settings in tab _Transistions_, and click _Next_.
+5. In the _Expiration_ tab, click _Current version_. That checks _Expire current version of object_. In the prompt enter "1" for expiration time of day from object creation. Click _Next_.
+6. Review the settings. The scope should include the whole bucket. Click _Save_.
+
 
 ## Installing the Platform
 ### Collecting Information
