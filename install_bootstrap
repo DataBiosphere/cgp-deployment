@@ -276,7 +276,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       ask_question "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
 
       azul_s3_bucket='azul_s3_bucket'
-      ask_question "What is the domain of the AWS S3 bucket where BDBag for Export-to-FireCloud are stored?" $azul_s3_bucket
+      ask_question "What is the name of the AWS S3 bucket where BDBag for Export-to-FireCloud are stored?" $azul_s3_bucket
 
 
 #      dcc_dashboard_port='dcc_dashboard_port'
@@ -318,6 +318,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 
       cat > boardwalk_launcher_config/boardwalk.config <<CONFIG
 {
+"AZUL_S3_BUCKET": "${azul_s3_bucket}",
 "GOOGLE_CLIENT_ID":"${google_client_id}",
 "GOOGLE_CLIENT_SECRET":"${google_client_secret}",
 "GOOGLE_SITE_VERIFICATION_CODE":"${google_site_verification_code}",
