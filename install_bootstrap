@@ -275,6 +275,10 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       fc_lambda_domain='fc_lambda_domain'
       ask_question "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
 
+      azul_s3_bucket='azul_s3_bucket'
+      ask_question "What is the domain of the AWS S3 bucket where BDBag for Export-to-FireCloud are stored?" $azul_s3_bucket
+
+
 #      dcc_dashboard_port='dcc_dashboard_port'
 #      ask_question "What is your DCC Dashboard Port?" "$DCC_DASHBOARD_PORT" "DCC Dashboard Port" $dcc_dashboard_port
 
