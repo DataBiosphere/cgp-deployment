@@ -362,8 +362,7 @@ CONFIG
       # If in dev mode, check for dev repos and clone if not present
       if [ "${boardwalk_mode}" = "dev" ]; then
         check_for_repo https://github.com/DataBiosphere/cgp-dashboard.git dcc-dashboard
-        #check_for_repo https://github.com/DataBiosphere/azul.git azul
-	check_for_repo2 https://github.com/DataBiosphere/azul.git azul
+        check_for_repo https://github.com/DataBiosphere/azul.git azul
         check_for_repo https://github.com/DataBiosphere/cgp-boardwalk.git boardwalk
       fi
       # Bringing stuff down in case there are some cached containers
