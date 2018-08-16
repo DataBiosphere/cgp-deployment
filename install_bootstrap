@@ -277,7 +277,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       ask_question "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
 
       azul_s3_bucket='azul_s3_bucket'
-      ask_question "What is the name of the AWS S3 bucket to store BDBags for 1 day?" "$AZUL_S3_BUCKET" "Azul S3 Bucket" $azul_s3_bucket
+      ask_question "What is the name of the AWS S3 bucket to store BDBags?" "$AZUL_S3_BUCKET" "Azul S3 Bucket" $azul_s3_bucket
 
 
 #      dcc_dashboard_port='dcc_dashboard_port'
