@@ -5,6 +5,8 @@ services:
     environment:
       APACHE_PATH: "${apache_path}"
       AZUL_S3_BUCKET: "${azul_s3_bucket}"
+      AWS_ACCESS_KEY_ID: "${user_aws_key}"
+      AWS_SECRET_ACCESS_KEY: "${user_aws_secret_key}"
       DATABASE_URL: "${database_url}"
       FLASK_APP: "/app/mapi.py"
       DCC_DASHBOARD_HOST: "${dcc_dashboard_host}"
