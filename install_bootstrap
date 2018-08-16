@@ -337,8 +337,8 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
       cat > boardwalk_launcher_config/boardwalk.config <<CONFIG
 {
 "AZUL_S3_BUCKET":"${azul_s3_bucket}",
-"AWS_ACCESS_KEY_ID":${user_aws_key},
-"AWS_SECRET_ACCESS_KEY":${user_aws_secret_key},
+"AWS_ACCESS_KEY_ID":"${user_aws_key}",
+"AWS_SECRET_ACCESS_KEY":"${user_aws_secret_key}",
 "DATABASE_URL":"${database_url}",
 "DCC_DASHBOARD_HOST":"${dcc_dashboard_host}",
 "DCC_DASHBOARD_PROTOCOL":"${dcc_dashboard_protocol}",
