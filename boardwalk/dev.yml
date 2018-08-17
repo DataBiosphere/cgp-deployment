@@ -4,8 +4,8 @@ services:
   dcc-dashboard-service:
     environment:
       APACHE_PATH: "${apache_path}"
-      AWS_ACCESS_KEY_ID: "${user_aws_key_id}"
-      AWS_SECRET_ACCESS_KEY: "${user_aws_secret_key}"
+      AWS_ACCESS_KEY_ID: "${aws_access_key_id}"
+      AWS_SECRET_ACCESS_KEY: "${aws_secret_access_key}"
       AZUL_S3_BUCKET: "${azul_s3_bucket}"
       DATABASE_URL: "${database_url}"
       FLASK_APP: "/app/mapi.py"
