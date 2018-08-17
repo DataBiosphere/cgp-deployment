@@ -1,0 +1,77 @@
+sequenceDiagram
+    participant Boardwalk as Boardwalk UI
+    participant Dashboard as Dashboard/Auth Service
+    note right of Dashboard: Auth Service will<br>be separated from <br>Dashboard at some<br>point
+    participant Azul as Azul WebService
+    participant ES as Elastic Search
+    participant Google
+    participant AWS as AWS SecretsManager
+    note over Boardwalk, Google: Begin Login / OAuth Authorization Code Grant Flow
+    Boardwalk ->> Google: User clicks Login
+    Google ->> Google: User enters valid credentials
+    Google ->> Dashboard: Redirect with Authorization code
+    Dashboard ->> Google: Authorization code, Client Id, Client Secret
+    Google ->> Dashboard: Access and refresh tokens, user profile
+    Dashboard ->> AWS: Bouncer library queries Secrets Manager for whitelist
+    AWS ->> Dashboard: The whitelist
+    alt 200 code
+        Dashboard --> Boardwalk: Redirect with access and refresh tokens in cookie
+    else 403 code
+        Dashboard ->> Boardwalk: Redirect to unauthorized page
+    end
+    note over Boardwalk, Google: End  Login / OAuth Authorization Code Grant Flow
+    note over Boardwalk, Azul: Begin UI makes API call to Azul
+    Boardwalk ->> Azul: API call, cookies auto included in request
+    note over Azul, Dashboard: Begin Authenticate and Authorize
+    Azul ->> Dashboard: Authenticate & Authorize
+    alt Auth Header
+        Dashboard ->> Dashboard: Access token from Auth header
+    else Cookie with token
+        Dashboard ->> Dashboard: Decrypt access token from cookie
+    else No cookie with token
+        Dashboard ->> Dashboard: There is no access token
+    end
+    alt There is an access token
+        Dashboard ->> Google: Validate access token
+        Google ->> Dashboard: 200 + user profile, or 401 (expired)
+        alt 200
+            Dashboard ->> AWS: Using Bouncer, is user in whitelist?
+            AWS ->> Dashboard: 200 or 403 status code
+            Dashboard ->> Dashboard: Remember status is 200 or 403
+        else 401, Token is expired
+            Dashboard ->> Google: Request new access token using refresh token, client id and secret
+            Google ->> Dashboard: 200 + new access token + user profile, or 401
+            alt New access token
+            Dashboard ->> Dashboard: Update access token cookie
+            Dashboard ->> AWS: Using Bouncer, is user in whitelist?
+            AWS ->> Dashboard: 200 or 403 status code
+            Dashboard ->> Dashboard: Remember status is 200 or 403
+            else 401, Refresh Token is expired
+                Dashboard ->> Dashboard: Remember status is 401
+            end
+        end 
+    else No Access token in request
+       Dashboard ->> Dashboard: Remember status is 401
+    end
+        Dashboard ->> Azul: Return status + cookies
+    note over Azul, Dashboard: End Authenticate and Authorize
+        alt 200
+            Azul ->> ES: Request data from ES
+            ES ->> Azul: Return data
+            Azul ->> Boardwalk: ES response + possibly new access token in cookie
+        else 401
+            Azul ->> Boardwalk: 401
+        else 403
+            Azul ->> Boardwalk: 403 
+        end
+    note over Boardwalk, Azul: End UI makes API call to Azul
+    note over Boardwalk, Dashboard: Begin UI checks if auth supported<br> and user logged in
+    Boardwalk ->> Dashboard: GET /me
+    alt Auth not enabled
+       Dashboard ->> Boardwalk: 200, name=anonymous, no avatar, no email
+    else Valid access and/or refresh token
+        Dashboard ->> Boardwalk: 200, name, avatar, email, new cookie
+    else No valid access nor refresh token
+        Dashboard ->> Boardwalk: 401
+    end
+    note over Boardwalk, Dashboard: End UI checks if auth supported<br> and user logged in
