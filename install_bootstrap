@@ -248,7 +248,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 #            read -ep $'What is the email address for notification?  Previous value: \n' -i "$EMAIL_ADDRESS" email_address
 #         else
 #            read -ep $'What is the email address for notification? \n' email_address
-      #      fi
+#      fi
 
       
       dcc_dashboard_host='dcc_dashboard_host'
