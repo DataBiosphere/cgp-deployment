@@ -46,7 +46,6 @@ function check_for_repo {
     fi
 }
 
-
 function generate_password {
     tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1
 }
