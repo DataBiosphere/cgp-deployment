@@ -93,7 +93,7 @@ The installation script (`install_bootstrap`) will prompt for several questions.
 * You will be asked to provide an host domain that points to your EC2 instance. You need to know the name of the domain but at the time of installation the domain (or _record set_) does not have to be configured in _Route 53_.
 * _Boardwalk_ has functionality to export metadata to Broad's FireCloud. In order to use it you need to provide your Google Cloud Platform credentials. Specifically you need the Google Client ID and the Google Client Secret (it's okay to leave the Google site verfication code empty). 
 * You need to input the [AWS IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)'s _ access key ID_ and *secret_access_key*.
-* You need to have the name of the [S3 bucket you created earlier](#makebucket) handy as the install script will ask for it. The name you input has to be the same name you gave when you created the bucket.
+* You need to have the name of the [S3 bucket you created earlier](#makebucket) handy as the install script will ask for it. The name you input has to be the exact name you gave it when you created the bucket.
 * All metadata reside in an Elasticsearch database. Make sure you have the domain name of that Elasticsearch instance handy.
 * Have the domain name of the _dos-dss server_ handy.
 
