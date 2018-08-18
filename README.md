@@ -63,7 +63,7 @@ Open inbound ports on your security group. Use the table below as a guide. Make 
 #### Adding a private/public key pair to your local machine
 On your local machine add the key pair file under `~/.ssh/<your_key_pair>.pem`. This is typically the same key pair that you use to connect to your VM via SSH. This key pair needs to be created on the [AWS console](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) so Amazon is aware of it. Set the privileges of that key pair file to _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not publicly viewable.
 
-#### Create an AWS S3 bucket for persistent storage of BDBag 
+####  <a name="makebucket"></a>Create an AWS S3 bucket for persistent storage of BDBag 
 The NIH Data Commons (DCPPC) uses BDBags to move metadata from one platform to another. In _Boardwalk_ a BDBag is created by clicking _Export to FireCloud_. Once clicked the selected metadata are packaged in a BDBag, and the bag is uploaded to an S3 bucket. Therefore, part of the installation process is creating an S3 bucket.
 Follow these steps to create it
 
@@ -93,6 +93,7 @@ The installation script (`install_bootstrap`) will prompt for several questions.
 * You will be asked to provide an host domain that points to your EC2 instance. You need to know the name of the domain but at the time of installation the domain (or _record set_) does not have to be configured in _Route 53_.
 * _Boardwalk_ has functionality to export metadata to Broad's FireCloud. In order to use it you need to provide your Google Cloud Platform credentials. Specifically you need the Google Client ID and the Google Client Secret (it's okay to leave the Google site verfication code empty). 
 * You need to input the [AWS IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)'s _ access key ID_ and *secret_access_key*.
+* You need to have the name of the [S3 bucket you created earlier](#makebucket) handy as the install script will ask for it. The name you input has to be the same name you gave when you created the bucket.
 * All metadata reside in an Elasticsearch database. Make sure you have the domain name of that Elasticsearch instance handy.
 * Have the domain name of the _dos-dss server_ handy.
 
