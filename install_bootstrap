@@ -249,7 +249,15 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 #            read -ep $'What is the email address for notification? \n' email_address
 #      fi
 
-      
+      project_name='project_name'
+      ask_question "What is the name of the project for this instance (e.g. Stage, Commons, AnVIL, etc.)? This name will be used for error messages." "$PROJECT_NAME" "project name" $project_name
+
+      contact_email='contact_email'
+      ask_question "What is a contact email in case there are problems authenticating?" "$CONTACT_EMAIL" "contact email" $contact_email
+
+      email_whitelist_name='email_whitelist_name'
+      ask_question "What is the name of the AWS Secret that contains the whitelist? (e.g. commons/dev/whitelist)" "$EMAIL_WHITELIST_NAME" "email whitelist name" $email_whitelist_name
+
       dcc_dashboard_host='dcc_dashboard_host'
       ask_question "What is the hostname of dcc-dashboard? (This is likely the domain name resolving to your virtual machine.)" "$DCC_DASHBOARD_HOST" "DCC Dashboard Host" $dcc_dashboard_host
       
@@ -339,6 +347,9 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 "AWS_ACCESS_KEY_ID":"${aws_access_key_id}",
 "AWS_SECRET_ACCESS_KEY":"${aws_secret_access_key}",
 "DATABASE_URL":"${database_url}",
+"PROJECT_NAME":"${project_name}",
+"CONTACT_EMAIL":"${contact_email}",
+"EMAIL_WHITELIST_NAME":"${email_whitelist_name}",
 "DCC_DASHBOARD_HOST":"${dcc_dashboard_host}",
 "DCC_DASHBOARD_PROTOCOL":"${dcc_dashboard_protocol}",
 "DCC_DASHBOARD_SERVICE":"${dcc_dashboard_service}",
