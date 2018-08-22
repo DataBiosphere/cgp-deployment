@@ -339,6 +339,9 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         dos_dss_service='dos_dss_service'
         ask_question "What is the domain of the dos-dss server?" "$DOS_DSS_SERVICE" "DOS DSS Service" $dos_dss_service
 
+        # to be used to encrypt the refresh token that is stored in the session
+        refresh_token_encrypt_key="$(generate_password)"
+
         user_group=$(stat -c '%u:%g' $HOME)
 
         #Setting up the database vars for login
