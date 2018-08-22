@@ -101,7 +101,7 @@ redwood/backups
 
 boardwalk/.env
 boardwalk/aws.config
-boardwalk/dcc-dashboard-service/
+boardwalk/azul/
 boardwalk/dcc-dashboard/
 boardwalk/boardwalk/
 boardwalk_launcher_config/boardwalk.config
