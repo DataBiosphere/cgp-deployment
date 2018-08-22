@@ -249,14 +249,32 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         #            read -ep $'What is the email address for notification? \n' email_address
         #      fi
 
-        project_name='project_name'
-        ask_question "What is the name of the project for this instance (e.g. Stage, Commons, AnVIL, etc.)? This name will be used for error messages." "$PROJECT_NAME" "project name" $project_name
+        ############################
+        # Authorization/whitelist  #
+        ############################
+        echo "Do you want to install with an authorization whitelist?"
+        require_auth=''
+        while [[ "${require_auth^^}" != 'Y' &&  "${require_auth^^}" != 'N' ]] ; do
+            echo "DO YOU WISH TO CONTINUE [Y/N]:"
+            read require_auth
+            if [ "${require_auth^^}" = 'Y' ] ; then
+                email_whitelist_name='email_whitelist_name'
+                ask_question "What is the name of the AWS Secret that contains the whitelist? (e.g. commons/dev/whitelist)" "$EMAIL_WHITELIST_NAME" "email whitelist name" $email_whitelist_name
 
-        contact_email='contact_email'
-        ask_question "What is a contact email in case there are problems authenticating?" "$CONTACT_EMAIL" "contact email" $contact_email
+                project_name='project_name'
+                ask_question "What is the name of the project for this instance (e.g. Stage, Commons, AnVIL, etc.)? This name will be used for error messages." "$PROJECT_NAME" "project name" $project_name
 
-        email_whitelist_name='email_whitelist_name'
-        ask_question "What is the name of the AWS Secret that contains the whitelist? (e.g. commons/dev/whitelist)" "$EMAIL_WHITELIST_NAME" "email whitelist name" $email_whitelist_name
+                contact_email='contact_email'
+                ask_question "What is a contact email in case there are problems authenticating?" "$CONTACT_EMAIL" "contact email" $contact_email
+            elif [ "${require_auth^^}" = 'N' ] ; then
+                # we need to reset these because otherwise the old value from the last run which was cached
+                # in boardwalk.config will overwrite. This would be bad because a value for email_whitelist_name
+                # indicates whether or not there is authentication.
+                email_whitelist_name=''
+                project_name=''
+                contact_email=''
+            fi
+        done
 
         dcc_dashboard_host='dcc_dashboard_host'
         ask_question "What is the hostname of dcc-dashboard? (This is likely the domain name resolving to your virtual machine.)" "$DCC_DASHBOARD_HOST" "DCC Dashboard Host" $dcc_dashboard_host
