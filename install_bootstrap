@@ -264,7 +264,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
                 ask_question "What is the name of the project for this instance (e.g. Stage, Commons, AnVIL, etc.)? This name will be used for error messages." "$PROJECT_NAME" "project name" $project_name
 
                 contact_email='contact_email'
-                ask_question "What is a contact email in case there are problems authenticating?" "$CONTACT_EMAIL" "contact email" $contact_email
+                ask_question "What is a contact email in case there are problems authorizing?" "$CONTACT_EMAIL" "contact email" $contact_email
             elif [ "${require_auth^^}" = 'N' ] ; then
                 # we need to reset these because otherwise the old value from the last run which was cached
                 # in boardwalk.config will overwrite. This would be bad because a value for email_whitelist_name
@@ -282,10 +282,10 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         # AWS questions            #
         ############################
         aws_access_key_id='aws_access_key_id'
-        ask_question "What is your AWS Key?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
+        ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
 
         aws_secret_access_key='aws_secret_access_key'
-        ask_question "What is your AWS Secret Key?" "$AWS_SECRET_ACCESS_KEY" "AWS Secret Key name" $aws_secret_access_key
+        ask_question "What is your AWS Secret Access Key?" "$AWS_SECRET_ACCESS_KEY" "AWS Secret Key name" $aws_secret_access_key
 
 
         #############################

@@ -52,29 +52,9 @@ environment :
 * r4.xlarge
 * 250GB disk
 
-For development work the following specifications have worked well in
-the past:
-* Ubuntu Server 16.04
-* m5.large
-* 60 GB disk
-
-
-#### Configuring the ports in your VM
-
-Open inbound ports on your security group. Use the table below as a
-guide. Make sure you add /32 to the *Elastic IP*.
-
-| Type | Port | Source | Description |
-| --- | --- | --- | --- |
-| HTTP | 80 | 0.0.0.0/0 | |
-| HTTP | 80 | ::/0 | |
-| HTTPS | 443 | 0.0.0.0/0 | |
-| HTTPS | 443 | ::/0 | |
-| All TCP | 0 - 65535 | _Your VM's Elastic IP_ | |
-| All TCP | 0 - 65535 | _Your Security Group ID_ | |
-| Custom TCP Rule | 9000 | _Your VM's Elastic IP_ | webservice port |
-| Custom TCP Rule | 9200 | _Your VM's Elastic IP_ | Elasticsearch |
-| SSH | 22 | 0.0.0.0/0 | |
+For small scale development, a t2.medim with 20GB disks running Ubuntu
+Server 16.04 may be suitable. For more intensive development, a m5.large
+instance with 60 GB disk has been sufficient.
 
 
 #### <a name="makeip"></a>Create and assign an _Elastic IP_ for your VM
@@ -98,6 +78,32 @@ guide. Make sure you add /32 to the *Elastic IP*.
     shows you how to ssh into your VM from a terminal.
 
 
+#### Make a routing to the VM
+
+You will need to make a URL to access the VM. On the AWS console, go to
+route 53 service, click **Hosted zones**. If you already have Hosted
+zone you can use, select it from the list. If not, create one to suit
+your needs. Once the zone is selected, click **Create Record Set** at
+the top. Choose a name you like and use the elastic ip as the value.
+
+#### Configuring the ports in your VM
+
+Open inbound ports on your security group. Use the table below as a
+guide. Make sure you add /32 to the *Elastic IP*.
+
+| Type | Port | Source | Description |
+| --- | --- | --- | --- |
+| HTTP | 80 | 0.0.0.0/0 | |
+| HTTP | 80 | ::/0 | |
+| HTTPS | 443 | 0.0.0.0/0 | |
+| HTTPS | 443 | ::/0 | |
+| All TCP | 0 - 65535 | _Your VM's Elastic IP_ | |
+| All TCP | 0 - 65535 | _Your Security Group ID_ | |
+| Custom TCP Rule | 9000 | _Your VM's Elastic IP_ | webservice port |
+| Custom TCP Rule | 9200 | _Your VM's Elastic IP_ | Elasticsearch |
+| SSH | 22 | 0.0.0.0/0 | |
+
+
 #### Adding a private/public key pair to your local machine
 
 On your local machine add the key pair file under
@@ -109,7 +115,7 @@ so Amazon is aware of it. Set the privileges of that key pair file to
 _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not
 publicly viewable.
 
-####  <a name="makebucket"></a>Create an AWS S3 bucket for persistent
+#### <a name="makebucket"></a>Create an AWS S3 bucket for persistent
 storage of BDBag
 
 The NIH Data Commons (DCPPC) uses BDBags to move metadata from one
@@ -145,56 +151,86 @@ _Amazon S3_
 
 ## Installing the Platform
 
-### Collecting Information
-
-The installation script (`install_bootstrap`) will prompt for several
-questions. To expedite the installation process it is useful to prepare
-for some of the answers beforehand. Here are a few pointers:
-
-* Make sure you know what AWS region your VM runs in (e.g. `us-west-2`).
-* Decide whether you want to create an instance for development or
-  production as it might impact the size and therefore the cost of the
-  host virtual machine (see above for recommendations).
-* Find out whether your favorite editor is installed on the VM.
-* Create a static IP address for your VM (AWS calls this _Elastic IP_).
-  You find a short set of instructions above.
-* You will be asked to provide an host domain that points to your EC2
-  instance. You need to know the name of the domain but at the time of
-  installation the domain (or _record set_) does not have to be
-  configured in _Route 53_.
-* _Boardwalk_ has functionality to export metadata to Broad's FireCloud.
-  In order to use it you need to provide your Google Cloud Platform
-  credentials. Specifically you need the Google Client ID and the Google
-  Client Secret (it's okay to leave the Google site verfication code
-  empty).
-* You need to input the [AWS IAM
-  user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)'s
-  _ access key ID_ and *secret_access_key*.
-* You need to have the name of the [S3 bucket you created
-  earlier](#makebucket) handy as the install script will ask for it. The
-  name you input has to be the exact name you gave it when you created
-  the bucket.
-* All metadata reside in an Elasticsearch database. Make sure you have
-  the domain name of that Elasticsearch instance handy.
-* Have the domain name of the _dos-dss server_ handy.
-
-### Running the Installer
-
-Once you have collected the above information, clone the repository on
-VM and run the bootstrap script. Be sure to set your branch to
+Now you can begin installation. You will clone the repository on VM and
+run the bootstrap script. Be sure to set your branch to
 `feature/commons` as these instruction are specific to this branch.
 
-    $ git clone https://github.com/DataBiosphere/cgp-deployment.git $ cd
-    cgp-deployment $ sudo bash install_bootstrap
+1. SSH onto your VM you created.
 
-The `install_bootstrap` script will ask you to configure each service
-interactively.  Specifically, you need to decide on whether you require
-a production (`prod` mode) or a development (`dev` mode) environment.
-Note that this decision can be made for _Common_ and _Boardwalk_
-independently. For details regarding _Boardwalk_ see the
-[README](boardwalk/README.md).
+1. clone this repo
 
-#### Installing in `prod` mode
+   ```
+   git clone https://github.com/DataBiosphere/cgp-deployment.git
+   ```
+1. Change the repo's directory
+   ```
+   cd cgp-deployment
+   ```
+
+1. Check out the correct branch
+   ```
+   git checkout feature/commons
+   ```
+
+1. Run the install script
+   ```
+   sudo bash install_bootstrap
+   ```
+
+The install script will ask for lots of information. Here we'll explain
+what to put for each step.
+
+1. First the Installer asks to install Docker and other dependencies.
+   These are necessary to continue.
+
+1. Next, the install will ask to launch the public-facing gateway nginx
+   server. You can do this in either `dev` mode or `prod` mode. For more
+   details see the [Installing in `prod` mode](#prod) and [Installing in
+   `dev` mode](#dev) sections.
+
+1. Now you will have to decide whether to launch boardwalk in `dev` or
+   `prod` modes.
+
+1. Next you are asked to decide if you want an authorization whitelist.
+
+   If you decide to use a whitelist you will need set it up with
+   [bouncer](https://github.com/ucsc-cgp/bouncer#how-to-use). You will
+   also be prompted for a project name and a contact email which will be
+   used in error messages for users who aren't authorized, but attempt
+   to access the data.
+
+1. You will now have to enter the hostname of dcc-dashboard. This is the
+   domain you made in Rounte 52, above. You need to know the name of the
+   domain, but at the time of installation the domain (or _record set_)
+   does not _actually_ have to be configured in _Route 53_
+
+1. Next you are prompted for AWS credentials. These can be made
+   specifically for the instance, or for a dev instance you could use
+   your own.
+
+1. The elasticsearch instance domain can be one that is prexisting if
+   used only for development.
+
+1. Next you will need a Google Client ID and Client secret. If you
+   missed it before, instructions to set this up are found on the
+   [Boardwalk deployment page](boardwalk/README.md#deployment).
+   _Boardwalk_ has functionality to export metadata to Broad's
+   FireCloud. In order to use it you need to provide your Google Cloud
+   Platform credentials.
+
+   You will also be asked for a Google site verfication code. For this
+   field you can just enter `NONE`.
+
+1. The bagit-firecloud-lambda is use for the **Export to Firecloud**
+   button.
+
+1. The [S3 bucket you created earlier](#makebucket) is what you should
+   use for this next step.
+
+1. The dos-dss server is needed next. Again you can use a prexisting one
+   if this is just for development.
+
+### <a name="prod"></a> Installing in `prod` mode
 
 Once the above steps have been completed we are now ready to install the
 components of the CGP.  In `prod` mode the installation will run the
@@ -202,14 +238,18 @@ Docker containers for all of the components listed below from the
 respective images from *Quay.io*. The `nginx` docker will be built from
 the *nginx-image* directory.
 
+Note that this decision can be made for _Common_ and _Boardwalk_
+independently. For details regarding _Boardwalk_ see the
+[README](boardwalk/README.md).
 
-#### Installing in `dev` mode
 
-Setting up *Common* to run in `dev` mode will cause [Let's
-Encrypt](https://letsencrypt.org/) to issue fake SSL certificates, which
-won't exhaust your certificate's limit. Setting up *Boardwalk* to run in
-`dev` mode will first build then run the Docker containers
-`boardwalk_nginx`, `boardwalk_dcc-dashboard`,
+### <a name="prod"></a> Installing in `dev` mode
+
+Setting up *Common* (the gateway nginx server) to run in `dev` mode will
+cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL
+certificates, which won't exhaust your certificate's limit. Setting up
+*Boardwalk* to run in `dev` mode will first build then run the Docker
+containers `boardwalk_nginx`, `boardwalk_dcc-dashboard`,
 `boardwalk_dcc-dashboard-service`, and `boardwalk_boardwalk` from the
 images (see
 [here](https://github.com/DataBiosphere/cgp-deployment/blob/feature/update-readme/boardwalk/README.md#development-mode)
@@ -233,10 +273,27 @@ and check the results.
 
 ### Troubleshooting
 
-If something goes wrong, you can [open an
-issue](https://github.com/DataBiosphere/cgp-deployment/issues/new) or
-[contact a
-human](https://github.com/DataBiosphere/cgp-deployment/graphs/contributors).
+* If boardwalk works fine over `http` but not over `https` you can try
+  restarting the docker containers.
+  ```
+  cd common
+  ```
+  ```
+  sudo docker-compose -f base.yml -f prod.yml down
+  ```
+  ```
+  sudo docker-compose -f base.yml -f prod.yml up -d
+  ```
+
+* If you switch the gateway nginx server (Common) from `dev` to `prod`
+  you will also need to release and create a new elastic IP. Also kill
+  the docker containers, delete the images, and try running the install
+  script again.
+
+* If all else fails, you can [open an
+  issue](https://github.com/DataBiosphere/cgp-deployment/issues/new) or
+  [contact a
+  human](https://github.com/DataBiosphere/cgp-deployment/graphs/contributors).
 
 ### Tips
 
