@@ -252,10 +252,9 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         ############################
         # Authorization/whitelist  #
         ############################
-        echo "Do you want to install with an authorization whitelist?"
+        echo "Do you want to install with an authorization whitelist? [Y/N]"
         require_auth=''
         while [[ "${require_auth^^}" != 'Y' &&  "${require_auth^^}" != 'N' ]] ; do
-            echo "DO YOU WISH TO CONTINUE [Y/N]:"
             read require_auth
             if [ "${require_auth^^}" = 'Y' ] ; then
                 email_whitelist_name='email_whitelist_name'
