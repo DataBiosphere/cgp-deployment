@@ -41,7 +41,8 @@ function check_for_repo {
     if [ ! -d "$2" ]; then
         git clone "$1" "$2"
         cd "$2"
-        git checkout feature/commons
+        #git checkout feature/commons
+        git checkout feature/persistent-bdbag
         cd ..
     fi
 }
