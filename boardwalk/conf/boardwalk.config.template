@@ -23,5 +23,6 @@ login_user={{ LOGIN_POSTGRES_USER }}
 login_db={{ LOGIN_POSTGRES_DB }}
 login_password={{ LOGIN_POSTGRES_PASSWORD }}
 login_token={{ LOG_IN_TOKEN }}
+refresh_token_encrypt_key={{ REFRESH_TOKEN_ENCRYPT_KEY }}
 secret_key={{ SECRET_KEY }}
 core_client_version={{ DCC_CORE_CLIENT_VERSION }}

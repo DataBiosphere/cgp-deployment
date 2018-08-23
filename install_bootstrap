@@ -181,7 +181,8 @@ done
 
 if [[ "${run_common^^}" = 'Y' ]]; then
     if [[ $(sudo docker ps | grep 'core-' | wc -l) = "0" ]]; then
-        echo "Do you want to run the public-facing gateway nginx server in dev mode or prod? [dev/prod]"
+        echo "Do you want to run the public-facing gateway nginx server (Common) in dev mode or prod? [dev/prod]"
+        echo "NOTE: dev mode will issue fake certificates, which may be insufficient for developing authentication."
         common_mode=-1
         while [[ "${common_mode}" = "-1" ]]; do
             read common_mode

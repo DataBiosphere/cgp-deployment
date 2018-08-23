@@ -25,7 +25,8 @@ These components are setup with the install process available in this
 repository:
 
 * [Boardwalk](boardwalk/README.md): our file browsing portal on top of
-  Redwood
+  the [Azul
+  Indexer](https://github.com/DataBiosphere/azul/tree/feature/commons).
 
 Related projects that are either already setup and available for use on
 the web or are used by components above:
@@ -52,7 +53,7 @@ environment :
 * r4.xlarge
 * 250GB disk
 
-For small scale development, a t2.medim with 20GB disks running Ubuntu
+For small scale development, a t2.medium with 20GB disks running Ubuntu
 Server 16.04 may be suitable. For more intensive development, a m5.large
 instance with 60 GB disk has been sufficient.
 
@@ -80,11 +81,12 @@ instance with 60 GB disk has been sufficient.
 
 #### Make a routing to the VM
 
-You will need to make a URL to access the VM. On the AWS console, go to
-route 53 service, click **Hosted zones**. If you already have Hosted
-zone you can use, select it from the list. If not, create one to suit
-your needs. Once the zone is selected, click **Create Record Set** at
-the top. Choose a name you like and use the elastic ip as the value.
+You will need to make a URL for consistent access to the VM. On the AWS
+console, go to route 53 service, click **Hosted zones**. If you already
+have Hosted zone you can use, select it from the list. If not, create
+one to suit your needs. Once the zone is selected, click **Create Record
+Set** at the top. Choose a name you like and use the elastic ip as the
+value.
 
 #### Configuring the ports in your VM
 
@@ -151,7 +153,7 @@ _Amazon S3_
 
 ## Installing the Platform
 
-Now you can begin installation. You will clone the repository on VM and
+Now you can begin installation. You will clone this repository on VM and
 run the bootstrap script. Be sure to set your branch to
 `feature/commons` as these instruction are specific to this branch.
 
@@ -185,8 +187,8 @@ what to put for each step.
 
 1. Next, the install will ask to launch the public-facing gateway nginx
    server. You can do this in either `dev` mode or `prod` mode. For more
-   details see the [Installing in `prod` mode](#prod) and [Installing in
-   `dev` mode](#dev) sections.
+   details see the [details for installing in dev vs. prod
+   mode](#devprod).
 
 1. Now you will have to decide whether to launch boardwalk in `dev` or
    `prod` modes.
@@ -230,7 +232,15 @@ what to put for each step.
 1. The dos-dss server is needed next. Again you can use a prexisting one
    if this is just for development.
 
-### <a name="prod"></a> Installing in `prod` mode
+### <a name="devprod"></a> Development vs. Production
+
+Installing can happen in `dev` mode for development, of `prod` mode for
+production.
+
+This decision can be made for _Common_ and _Boardwalk_ independently.
+For details regarding _Boardwalk_ see the [README](boardwalk/README.md).
+
+#### Installing in `prod` mode
 
 Once the above steps have been completed we are now ready to install the
 components of the CGP.  In `prod` mode the installation will run the
@@ -238,12 +248,7 @@ Docker containers for all of the components listed below from the
 respective images from *Quay.io*. The `nginx` docker will be built from
 the *nginx-image* directory.
 
-Note that this decision can be made for _Common_ and _Boardwalk_
-independently. For details regarding _Boardwalk_ see the
-[README](boardwalk/README.md).
-
-
-### <a name="prod"></a> Installing in `dev` mode
+#### Installing in `dev` mode
 
 Setting up *Common* (the gateway nginx server) to run in `dev` mode will
 cause [Let's Encrypt](https://letsencrypt.org/) to issue fake SSL
@@ -304,5 +309,4 @@ and check the results.
 ### To Do
 
 * the bootstrapper should install Java, Dockstore CLI
-* Consonance config.template includes hard-coded Consonance token, needs
-  to be generated and written to .env file just like Beni does
+
