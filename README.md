@@ -79,7 +79,7 @@ instance with 60 GB disk has been sufficient.
     shows you how to ssh into your VM from a terminal.
 
 
-#### Make a routing to the VM
+#### <a name="route53"></a> Create a DNS entry for the VM in Route 53
 
 You will need to create a DNS record that maps to your VM. On the AWS
 console, go to route 53 service, click **Hosted zones**. If you already
@@ -117,7 +117,7 @@ so Amazon is aware of it. Set the privileges of that key pair file to
 _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not
 publicly viewable.
 
-#### <a name="makebucket"></a>Create an AWS S3 bucket for persistent
+#### <a name="makebucket"></a> Create an AWS S3 bucket for persistent
 storage of BDBag
 
 The NIH Data Commons (DCPPC) uses BDBags to move metadata from one
@@ -202,9 +202,9 @@ what to put for each step.
    to access the data.
 
 1. You will now have to enter the hostname of dcc-dashboard. This is the
-   domain you made in Rounte 52, above. You need to know the name of the
-   domain, but at the time of installation the domain (or _record set_)
-   does not _actually_ have to be configured in _Route 53_
+   domain you made in Route 53, [above](#route53). You need to know the
+   name of the domain, but at the time of installation the domain (or
+   _record set_) does not _actually_ have to be configured in _Route 53_
 
 1. Next you are prompted for AWS credentials. These can be made
    specifically for the instance, or for a dev instance you could use
