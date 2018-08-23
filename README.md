@@ -81,7 +81,7 @@ instance with 60 GB disk has been sufficient.
 
 #### Make a routing to the VM
 
-You will need to make a URL for consistent access to the VM. On the AWS
+You will need to create a DNS record that maps to your VM. On the AWS
 console, go to route 53 service, click **Hosted zones**. If you already
 have Hosted zone you can use, select it from the list. If not, create
 one to suit your needs. Once the zone is selected, click **Create Record
@@ -229,8 +229,8 @@ what to put for each step.
 1. The [S3 bucket you created earlier](#makebucket) is what you should
    use for this next step.
 
-1. The dos-dss server is needed next. Again you can use a prexisting one
-   if this is just for development.
+1. The dos-dss server is needed next. We use the
+   [cgp-data-store](https://github.com/DataBiosphere/cgp-data-store).
 
 ### <a name="devprod"></a> Development vs. Production
 
@@ -264,8 +264,8 @@ during development, it is recommended to set up *Common* in `prod` mode,
 and *Boardwalk* in `dev` mode.
 
 Once the installer completes, the system should be up and running.
-Congratulations! Execute `docker ps` to get an idea of which containers
-are running.
+Congratulations! Execute `sudo docker ps` to get an idea of which
+containers are running.
 
 
 ## Post-Installation
