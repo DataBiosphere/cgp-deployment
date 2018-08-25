@@ -46,16 +46,6 @@ function check_for_repo {
     fi
 }
 
-function check_for_repo2 {
-    if [ ! -d "$2" ]; then
-        git clone "$1" "$2"
-        cd "$2"
-        git checkout feature/persistent-bdbag
-        cd ..
-    fi
-}
-
-
 function generate_password {
     tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1
 }
@@ -380,7 +370,7 @@ CONFIG
       # If in dev mode, check for dev repos and clone if not present
       if [ "${boardwalk_mode}" = "dev" ]; then
         check_for_repo https://github.com/DataBiosphere/cgp-dashboard.git dcc-dashboard
-        check_for_repo2 https://github.com/DataBiosphere/azul.git azul
+        check_for_repo https://github.com/DataBiosphere/azul.git azul
         check_for_repo https://github.com/DataBiosphere/cgp-boardwalk.git boardwalk
       fi
       # Bringing stuff down in case there are some cached containers
