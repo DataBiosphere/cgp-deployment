@@ -1,6 +1,9 @@
 azul_s3_bucket={{ AZUL_S3_BUCKET }}
 aws_access_key_id={{ AWS_ACCESS_KEY_ID }}
 aws_secret_access_key={{ AWS_SECRET_ACCESS_KEY }}
+project_name={{ PROJECT_NAME }}
+contact_email={{ CONTACT_EMAIL }}
+email_whitelist_name={{ EMAIL_WHITELIST_NAME }}
 google_client_id={{ GOOGLE_CLIENT_ID }}
 google_client_secret={{ GOOGLE_CLIENT_SECRET }}
 google_site_verification_code= {{ GOOGLE_SITE_VERIFICATION_CODE }}
@@ -20,5 +23,6 @@ login_user={{ LOGIN_POSTGRES_USER }}
 login_db={{ LOGIN_POSTGRES_DB }}
 login_password={{ LOGIN_POSTGRES_PASSWORD }}
 login_token={{ LOG_IN_TOKEN }}
+refresh_token_encrypt_key={{ REFRESH_TOKEN_ENCRYPT_KEY }}
 secret_key={{ SECRET_KEY }}
 core_client_version={{ DCC_CORE_CLIENT_VERSION }}

@@ -46,6 +46,9 @@ services:
       - ~/dcc-dashboard/logs:/app/log
 #      - dashboard1:/app
     environment:
+      PROJECT_NAME: "${project_name}"
+      CONTACT_EMAIL: "${contact_email}"
+      EMAIL_WHITELIST_NAME: "${email_whitelist_name}"
       GOOGLE_CLIENT_ID: "${google_client_id}"
       GOOGLE_CLIENT_SECRET: "${google_client_secret}"
       GOOGLE_SITE_VERIFICATION_CODE: "${google_site_verification_code}"
@@ -55,6 +58,7 @@ services:
       L_POSTGRES_USER: "${login_user}"
       L_POSTGRES_PASSWORD: "${login_password}"
       L_POSTGRES_DB: "${login_db}"
+      REFRESH_TOKEN_ENCRYPT_KEY: "${refresh_token_encrypt_key}"
       SECRET_KEY: "${secret_key}"
       LOG_IN_TOKEN: "${login_token}"
       SERVER_NAME: "${dcc_dashboard_host}"
