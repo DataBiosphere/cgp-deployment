@@ -370,6 +370,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 "PROJECT_NAME":"${project_name}",
 "CONTACT_EMAIL":"${contact_email}",
 "EMAIL_WHITELIST_NAME":"${email_whitelist_name}",
+"REFRESH_TOKEN_ENCRYPT_KEY":"${refresh_token_encrypt_key}",
 "DCC_DASHBOARD_HOST":"${dcc_dashboard_host}",
 "DCC_DASHBOARD_PROTOCOL":"${dcc_dashboard_protocol}",
 "DCC_DASHBOARD_SERVICE":"${dcc_dashboard_service}",
