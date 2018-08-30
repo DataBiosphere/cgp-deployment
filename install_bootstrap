@@ -47,7 +47,7 @@ function check_for_repo {
 }
 
 function generate_password {
-    tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1
+    tr -cd '[:alnum:]' < /dev/urandom | fold -w32 | head -n1
 }
 
 # Ask the user a question and save the answer.
