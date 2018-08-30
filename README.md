@@ -206,9 +206,10 @@ what to put for each step.
    name of the domain, but at the time of installation the domain (or
    _record set_) does not _actually_ have to be configured in _Route 53_
 
-1. Next you are prompted for AWS credentials. These can be made
-   specifically for the instance, or for a dev instance you could use
-   your own.
+1. Next you are prompted for the default AWS region to be used and for
+   AWS credentials. The region is the one you whitelist, buckets, etc.
+   are in. The credentials can be made specifically for the instance, or
+   for a dev instance you could use your own.
 
 1. The elasticsearch instance domain can be one that is prexisting if
    used only for development.
