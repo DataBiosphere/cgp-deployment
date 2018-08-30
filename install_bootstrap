@@ -47,7 +47,7 @@ function check_for_repo {
 }
 
 function generate_password {
-    tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1
+    tr -cd '[:alnum:]' < /dev/urandom | fold -w32 | head -n1
 }
 
 # Ask the user a question and save the answer.
@@ -282,6 +282,9 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         ############################
         # AWS questions            #
         ############################
+        aws_default_region='aws_default_region'
+        ask_question "What is your AWS region?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
+
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
 
@@ -364,12 +367,14 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         cat > boardwalk_launcher_config/boardwalk.config <<CONFIG
 {
 "AZUL_S3_BUCKET":"${azul_s3_bucket}",
+"AWS_DEFAULT_REGION":"${aws_default_region}",
 "AWS_ACCESS_KEY_ID":"${aws_access_key_id}",
 "AWS_SECRET_ACCESS_KEY":"${aws_secret_access_key}",
 "DATABASE_URL":"${database_url}",
 "PROJECT_NAME":"${project_name}",
 "CONTACT_EMAIL":"${contact_email}",
 "EMAIL_WHITELIST_NAME":"${email_whitelist_name}",
+"REFRESH_TOKEN_ENCRYPT_KEY":"${refresh_token_encrypt_key}",
 "DCC_DASHBOARD_HOST":"${dcc_dashboard_host}",
 "DCC_DASHBOARD_PROTOCOL":"${dcc_dashboard_protocol}",
 "DCC_DASHBOARD_SERVICE":"${dcc_dashboard_service}",
