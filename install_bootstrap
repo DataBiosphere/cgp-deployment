@@ -282,6 +282,9 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         ############################
         # AWS questions            #
         ############################
+        aws_default_region='aws_default_region'
+        ask_question "What is your AWS Default Region?" "$AWS_DEFAULT_REGION" "AWS Default Region" $aws_default_region
+
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
 
@@ -364,6 +367,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         cat > boardwalk_launcher_config/boardwalk.config <<CONFIG
 {
 "AZUL_S3_BUCKET":"${azul_s3_bucket}",
+"AWS_DEFAULT_REGION":"${aws_default_region}",
 "AWS_ACCESS_KEY_ID":"${aws_access_key_id}",
 "AWS_SECRET_ACCESS_KEY":"${aws_secret_access_key}",
 "DATABASE_URL":"${database_url}",
