@@ -286,7 +286,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         ask_question "What is your AWS region?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
 
         azul_s3_aws_region='azul_s3_aws_region'
-        ask_question "What is your AWS Access Key ID?" "$AZUL_S3_AWS_REGION" "AWS Key name" $azul_s3_aws_region
+        ask_question "What is the region where the BDBag for export to FireCloud will be temporarily be stored?" "$AZUL_S3_AWS_REGION" "AWS Key name" $azul_s3_aws_region
 
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
@@ -326,6 +326,8 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         azul_s3_bucket='azul_s3_bucket'
         ask_question "What is the name of the AWS S3 bucket to store BDBags?" "$AZUL_S3_BUCKET" "Azul S3 Bucket" $azul_s3_bucket
 
+	azul_presigned_url_expiration='azul_presigned_url_expiration'
+        ask_question "Choose an expiration time (in seconds) for presigned URL to the S3-BDBag for FC export (recommended 3600)?" "$AZUL_PRESIGNED_URL_EXPIRATION" "AWS Key name" $azul_presigned_url_expiration
 
         #      dcc_dashboard_port='dcc_dashboard_port'
         #      ask_question "What is your DCC Dashboard Port?" "$DCC_DASHBOARD_PORT" "DCC Dashboard Port" $dcc_dashboard_port
@@ -370,8 +372,9 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         cat > boardwalk_launcher_config/boardwalk.config <<CONFIG
 {
 "AZUL_S3_BUCKET":"${azul_s3_bucket}",
-"AWS_DEFAULT_REGION":"${aws_default_region}",
 "AZUL_S3_AWS_REGION":"${azul_s3_aws_region}",
+"AZUL_PRESIGNED_URL_EXPIRATION":"${azul_presigned_url_expiration}",
+"AWS_DEFAULT_REGION":"${aws_default_region}",
 "AWS_ACCESS_KEY_ID":"${aws_access_key_id}",
 "AWS_SECRET_ACCESS_KEY":"${aws_secret_access_key}",
 "DATABASE_URL":"${database_url}",
