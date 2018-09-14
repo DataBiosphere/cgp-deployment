@@ -286,7 +286,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         ask_question "What is your AWS region?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
 
         azul_s3_aws_region='azul_s3_aws_region'
-        ask_question "What is the region where the BDBag for export to FireCloud will be temporarily be stored?" "$AZUL_S3_AWS_REGION" "Azul_S3_Aws_Region" $azul_s3_aws_region
+        ask_question "What is the AWS region where the BDBag for export to FireCloud will be temporarily be stored?" "$AZUL_S3_AWS_REGION" "Azul_S3_Aws_Region" $azul_s3_aws_region
 
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
