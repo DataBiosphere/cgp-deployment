@@ -327,7 +327,6 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         ask_question "What is the name of the AWS S3 bucket to store BDBags?" "$AZUL_S3_BUCKET" "Azul S3 Bucket" $azul_s3_bucket
 
 	azul_presigned_url_expiration='azul_presigned_url_expiration'
-	ask_question "Choose an expiration time (in seconds) for presigned URL to the S3-BDBag for FC export (recommended 3600)?" "$AZUL_PRESIGNED_URL_EXPIRATION" "Azul Presigned Url Expiration" $azul_presigned_url_expiration
 
         #      dcc_dashboard_port='dcc_dashboard_port'
         #      ask_question "What is your DCC Dashboard Port?" "$DCC_DASHBOARD_PORT" "DCC Dashboard Port" $dcc_dashboard_port
