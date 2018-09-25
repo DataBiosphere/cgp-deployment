@@ -99,7 +99,6 @@ services:
     image: quay.io/ucsc_cgl/commons-boardwalk:commons-0.1.1-beta
     environment:
       - BOARDWALK_HOST=${dcc_dashboard_host}
-      - BW_DATA_URL=${dcc_dashboard_protocol}://${dcc_dashboard_host}
       - BEARER_TOKEN=${login_token}
     networks:
       - server
