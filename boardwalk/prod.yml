@@ -22,7 +22,7 @@ services:
       FC_LAMBDA_DOMAIN: "${fc_lambda_domain}"
       FC_LAMBDA_PORT: "${fc_lambda_port}"
       DOS_DSS_SERVICE: "${dos_dss_service}"
-    image: quay.io/ucsc_cgl/azul-commons:commons-0.1.8-beta
+    image: quay.io/ucsc_cgl/azul-commons:commons-0.1.9-beta
     volumes:
       - ~/dcc-dashboard-service/logs:/app/log
     #build: dcc-dashboard-service
@@ -38,7 +38,7 @@ services:
       - login-db
     restart: always
   dcc-dashboard:
-    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.4-beta
+    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.5-beta
     #build: dcc-dashboard
     ports:
       - "80"
