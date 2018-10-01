@@ -283,7 +283,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         # AWS questions            #
         ############################
         aws_default_region='aws_default_region'
-        ask_question "What is your AWS region does dcc-dashboard reside in?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
+        ask_question "What AWS region does dcc-dashboard reside in?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
 
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
