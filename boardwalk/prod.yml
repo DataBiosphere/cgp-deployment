@@ -8,6 +8,8 @@ services:
       AWS_ACCESS_KEY_ID: "${aws_access_key_id}"
       AWS_SECRET_ACCESS_KEY: "${aws_secret_access_key}"
       AZUL_S3_BUCKET: "${azul_s3_bucket}"
+      AZUL_S3_AWS_REGION: "${azul_s3_aws_region}"
+      AZUL_PRESIGNED_URL_EXPIRATION: "${azul_presigned_url_expiration}"
       DATABASE_URL: "${database_url}"
       FLASK_APP: "/app/mapi.py"
       DCC_DASHBOARD_HOST: "${dcc_dashboard_host}"
@@ -18,9 +20,6 @@ services:
       ES_DOMAIN: "${es_domain}"
       ES_PORT: "${es_port}"
       ES_PROTOCOL: "${es_protocol}"
-      FC_LAMBDA_PROTOCOL: "${fc_lambda_protocol}"
-      FC_LAMBDA_DOMAIN: "${fc_lambda_domain}"
-      FC_LAMBDA_PORT: "${fc_lambda_port}"
       DOS_DSS_SERVICE: "${dos_dss_service}"
     image: quay.io/ucsc_cgl/azul-commons:commons-0.1.9-beta
     volumes:
