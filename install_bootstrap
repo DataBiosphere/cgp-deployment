@@ -283,7 +283,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         # AWS questions            #
         ############################
         aws_default_region='aws_default_region'
-        ask_question "What is your AWS region?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
+        ask_question "What AWS region does AWS Secrets Manager reside in?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
 
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
@@ -314,15 +314,19 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         google_site_verification_code='google_site_verification_code'
         ask_question "What is your Google site verification code, something like tk74JOp1VBqdRQVTirM8WKpa1VIYW_vwxfoJo53inH8?" "$GOOGLE_SITE_VERIFICATION_CODE" "Google Site Verification Code" $google_site_verification_code
 
-        fc_lambda_protocol='https'
-        fc_lambda_port='443'
 
-        fc_lambda_domain='fc_lambda_domain'
-        ask_question "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
+	#####################################
+        # Generating presigned URLs in AWS  #
+        #####################################
 
         azul_s3_bucket='azul_s3_bucket'
         ask_question "What is the name of the AWS S3 bucket to store BDBags?" "$AZUL_S3_BUCKET" "Azul S3 Bucket" $azul_s3_bucket
 
+        azul_s3_aws_region='azul_s3_aws_region'
+        ask_question "What is the AWS region of that AWS S3 bucket?" "$AZUL_S3_AWS_REGION" "Azul_S3_Aws_Region" $azul_s3_aws_region
+
+        # The default expiration time of the presigned URL is set to 1 h.
+	azul_presigned_url_expiration=3600
 
         #      dcc_dashboard_port='dcc_dashboard_port'
         #      ask_question "What is your DCC Dashboard Port?" "$DCC_DASHBOARD_PORT" "DCC Dashboard Port" $dcc_dashboard_port
@@ -367,6 +371,8 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         cat > boardwalk_launcher_config/boardwalk.config <<CONFIG
 {
 "AZUL_S3_BUCKET":"${azul_s3_bucket}",
+"AZUL_S3_AWS_REGION":"${azul_s3_aws_region}",
+"AZUL_PRESIGNED_URL_EXPIRATION":"${azul_presigned_url_expiration}",
 "AWS_DEFAULT_REGION":"${aws_default_region}",
 "AWS_ACCESS_KEY_ID":"${aws_access_key_id}",
 "AWS_SECRET_ACCESS_KEY":"${aws_secret_access_key}",
@@ -384,9 +390,6 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
 "ES_DOMAIN":"${es_domain}",
 "ES_PORT":"${es_port}",
 "ES_PROTOCOL":"${es_protocol}",
-"FC_LAMBDA_PROTOCOL":"${fc_lambda_protocol}",
-"FC_LAMBDA_DOMAIN":"${fc_lambda_domain}",
-"FC_LAMBDA_PORT":"${fc_lambda_port}",
 "GOOGLE_CLIENT_ID":"${google_client_id}",
 "GOOGLE_CLIENT_SECRET":"${google_client_secret}",
 "GOOGLE_SITE_VERIFICATION_CODE":"${google_site_verification_code}",
