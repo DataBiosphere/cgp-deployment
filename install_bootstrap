@@ -283,7 +283,7 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         # AWS questions            #
         ############################
         aws_default_region='aws_default_region'
-        ask_question "What AWS region does dcc-dashboard reside in?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
+        ask_question "What AWS region does AWS Secrets Manager reside in?" "$AWS_DEFAULT_REGION" "AWS region" $aws_default_region
 
         aws_access_key_id='aws_access_key_id'
         ask_question "What is your AWS Access Key ID?" "$AWS_ACCESS_KEY_ID" "AWS Key name" $aws_access_key_id
@@ -314,12 +314,6 @@ while [[ "${run_boardwalk^^}" != 'Y' &&  "${run_boardwalk^^}" != 'N' ]] ; do
         google_site_verification_code='google_site_verification_code'
         ask_question "What is your Google site verification code, something like tk74JOp1VBqdRQVTirM8WKpa1VIYW_vwxfoJo53inH8?" "$GOOGLE_SITE_VERIFICATION_CODE" "Google Site Verification Code" $google_site_verification_code
 
-	# bagit-firecloud-lambda 
-        fc_lambda_protocol='https'
-        fc_lambda_port='443'
-
-        fc_lambda_domain='fc_lambda_domain'
-        ask_question "What is the domain of the bagit-firecloud-lambda?" "$FC_LAMBDA_DOMAIN" "FireCloud Bagit Lambda Domain" $fc_lambda_domain
 
 	#####################################
         # Generating presigned URLs in AWS  #

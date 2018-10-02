@@ -20,9 +20,6 @@ services:
       ES_DOMAIN: "${es_domain}"
       ES_PORT: "${es_port}"
       ES_PROTOCOL: "${es_protocol}"
-      FC_LAMBDA_PROTOCOL: "${fc_lambda_protocol}"
-      FC_LAMBDA_DOMAIN: "${fc_lambda_domain}"
-      FC_LAMBDA_PORT: "${fc_lambda_port}"
       DOS_DSS_SERVICE: "${dos_dss_service}"
     image: quay.io/ucsc_cgl/azul-commons:commons-0.1.9-beta
     volumes:
