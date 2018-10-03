@@ -224,7 +224,8 @@ what to put for each step.
    field you can just enter `NONE`.
 
 1. The [S3 bucket you created earlier](#makebucket) is what you should
-   use for this next step.
+   use for this next step. Provide the name you assigned to the bucket,
+   and the AWS region that bucket resides in.
 
 1. The dos-dss server is needed next. We use the
    [cgp-data-store](https://github.com/DataBiosphere/cgp-data-store).
