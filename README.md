@@ -117,8 +117,7 @@ so Amazon is aware of it. Set the privileges of that key pair file to
 _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not
 publicly viewable.
 
-#### <a name="makebucket"></a> Create an AWS S3 bucket for persistent
-storage of BDBag
+#### <a name="makebucket"></a> Create an AWS S3 bucket for persistent storage of BDBag
 
 The NIH Data Commons (DCPPC) uses BDBags to move metadata from one
 platform to another. In _Boardwalk_ a BDBag is created by clicking
@@ -223,9 +222,6 @@ what to put for each step.
 
    You will also be asked for a Google site verfication code. For this
    field you can just enter `NONE`.
-
-1. The bagit-firecloud-lambda is use for the **Export to Firecloud**
-   button.
 
 1. The [S3 bucket you created earlier](#makebucket) is what you should
    use for this next step.
