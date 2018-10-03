@@ -117,7 +117,7 @@ so Amazon is aware of it. Set the privileges of that key pair file to
 _read-by-user-only_ by `chmod 400 ~/.ssh/<your_key>.pem` so it is not
 publicly viewable.
 
-#### <a name="makebucket"></a> Create an AWS S3 bucket for persistent storage of BDBag
+#### <a name="makebucket"></a> Create an AWS S3 bucket for persistent storage of BDBags
 
 The NIH Data Commons (DCPPC) uses BDBags to move metadata from one
 platform to another. In _Boardwalk_ a BDBag is created by clicking
@@ -225,7 +225,7 @@ what to put for each step.
 
 1. The [S3 bucket you created earlier](#makebucket) is what you should
    use for this next step. Provide the name you assigned to the bucket,
-   and the AWS region that bucket resides in.
+   and the AWS region that the bucket resides in.
 
 1. The dos-dss server is needed next. We use the
    [cgp-data-store](https://github.com/DataBiosphere/cgp-data-store).
