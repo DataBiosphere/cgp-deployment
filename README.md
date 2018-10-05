@@ -213,15 +213,10 @@ what to put for each step.
 1. The elasticsearch instance domain can be one that is prexisting if
    used only for development.
 
-1. Next you will need a Google Client ID and Client secret. If you
-   missed it before, instructions to set this up are found on the
-   [Boardwalk deployment page](boardwalk/README.md#deployment).
-   _Boardwalk_ has functionality to export metadata to Broad's
-   FireCloud. In order to use it you need to provide your Google Cloud
-   Platform credentials.
-
-   You will also be asked for a Google site verfication code. For this
-   field you can just enter `NONE`.
+1. Provide the Google Client ID and Client Secret you got from the
+   OAuth2 app. Instructions on how to set this up can be found on the [Boardwalk deployment page](boardwalk/README.md#deployment). Also, enter
+   your Google site verfication code if you have one, otherwise enter
+   `NONE`.
 
 1. The [S3 bucket you created earlier](#makebucket) is what you should
    use for this next step. Provide the name you assigned to the bucket,
