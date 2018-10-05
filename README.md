@@ -213,7 +213,7 @@ what to put for each step.
 1. The elasticsearch instance domain can be one that is prexisting if
    used only for development.
 
-1. Provide the a Google Client ID and Client Secret you got from the
+1. Provide the Google Client ID and Client Secret you got from the
    OAuth2 app. Instructions to set this up can be
    found on the [Boardwalk deployment page](boardwalk/README.md#deployment).That will enable user to log in with a Google account
    (username + pwd) to work with access-controlled data if needed.
