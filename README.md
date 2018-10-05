@@ -214,14 +214,8 @@ what to put for each step.
    used only for development.
 
 1. Provide the Google Client ID and Client Secret you got from the
-   OAuth2 app. Instructions to set this up can be
-   found on the [Boardwalk deployment page](boardwalk/README.md#deployment).That will enable user to log in with a Google account
-   (username + pwd) to work with access-controlled data if needed.
-   Log-in is not necessary in order to export non-access-controlled
-   metadata from _Boardwalk_ to Broad's FireCloud.
-
-   You will also be asked for a Google site verfication code. For this
-   field you can just enter `NONE`.
+   OAuth2 app. You will also be asked for a Google site verfication
+   code. For this field you can just enter `NONE`.
 
 1. The [S3 bucket you created earlier](#makebucket) is what you should
    use for this next step. Provide the name you assigned to the bucket,
