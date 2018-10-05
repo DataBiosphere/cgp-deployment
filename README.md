@@ -213,12 +213,12 @@ what to put for each step.
 1. The elasticsearch instance domain can be one that is prexisting if
    used only for development.
 
-1. Next you will need a Google Client ID and Client secret. If you
-   missed it before, instructions to set this up are found on the
-   [Boardwalk deployment page](boardwalk/README.md#deployment).
-   _Boardwalk_ has functionality to export metadata to Broad's
-   FireCloud. In order to use it you need to provide your Google Cloud
-   Platform credentials.
+1. You need a Google Client ID and Client Secret to create a Google
+   OAuth2 app during installation. Instructions to set this up can be
+   found on the [Boardwalk deployment page](boardwalk/README.md#deployment).The OAuth2 app will enable users to log in with a Google account
+   (username + pwd) to work with access-controlled data if needed.
+   Log-in is not necessary in order to export non-access-controlled
+   metadata from _Boardwalk_ to Broad's FireCloud.
 
    You will also be asked for a Google site verfication code. For this
    field you can just enter `NONE`.
