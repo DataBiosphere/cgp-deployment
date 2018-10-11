@@ -21,7 +21,7 @@ services:
       ES_PORT: "${es_port}"
       ES_PROTOCOL: "${es_protocol}"
       DOS_DSS_SERVICE: "${dos_dss_service}"
-    image: quay.io/ucsc_cgl/azul-commons:commons-0.1.9-beta
+    image: quay.io/ucsc_cgl/azul-commons:commons-0.1.10-beta
     volumes:
       - ~/dcc-dashboard-service/logs:/app/log
     #build: dcc-dashboard-service
@@ -37,7 +37,7 @@ services:
       - login-db
     restart: always
   dcc-dashboard:
-    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.5-beta
+    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.6-beta
     #build: dcc-dashboard
     ports:
       - "80"
@@ -96,7 +96,7 @@ services:
       - server
     restart: always
   boardwalk:
-    image: quay.io/ucsc_cgl/commons-boardwalk:commons-0.1.2-beta
+    image: quay.io/ucsc_cgl/commons-boardwalk:commons-0.1.3-beta
     environment:
       - BOARDWALK_HOST=${dcc_dashboard_host}
       - BEARER_TOKEN=${login_token}
