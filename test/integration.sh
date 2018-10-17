@@ -47,7 +47,7 @@ function main {
     # This tests whether all Docker containers are installed and then
     # hits the DCC Dashboard Host and checks whether it returns a 200
     # status code.
-    
+
     check_setup
     cd "$(dirname "${BASH_SOURCE[0]}")"
     LOG_LEVEL_ALL
@@ -63,9 +63,9 @@ function main {
 
     status_code=$(echo "$response" | grep 'HTTP.*' | cut -f2- -d " ")
     if [[ ! "$status_code" == *"200"* ]]; then
-	ERROR "Did not get status code 200 from host $dcc_host" && exit 1
+        ERROR "Did not get status code 200 from host $dcc_host" && exit 1
     fi
-    
+
     INFO "TEST SUCCEEDED"
 }
 
