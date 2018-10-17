@@ -15,8 +15,8 @@ function check_setup {
     # Get array of running containers.
     containers=($(sudo docker ps | tail -n +2 | awk ' {print $NF} '))
 
-    # Get array of all necessary containers from file.
-    fname=~/cgp-deployment/test/expected_containers
+    # Get array of all required containers from file.
+    fname=expected_containers
     IFS=$'\r\n' GLOBIGNORE='*' command eval  'containers_expected=($(cat $fname))'
     containers_expected=($containers_expected)  # cast as array
 
@@ -44,38 +44,28 @@ function check_setup {
 }
 
 function main {
+    # This tests whether all Docker containers are installed and then
+    # hits the DCC Dashboard Host and checks whether it returns a 200
+    # status code.
+    
     check_setup
     cd "$(dirname "${BASH_SOURCE[0]}")"
     LOG_LEVEL_ALL
 
-    [[ -d outputs ]] && sudo rm -rf outputs && INFO "deleted old outputs"
+    # Get name of the DCC Dashboard Host.
+    curr_dir=$(pwd)
+    cd ../boardwalk
+    dcc_host=$(grep -o 'dcc_dashboard_service.*' .env | cut -f2- -d=)
+    cd "$curr_dir"
 
-    # access_token=$(../redwood/cli/bin/redwood token create)
-    # INFO "generated testing access token: ${access_token}"
+    url="https://$dcc_host/api/v1/repository/files/export?/"
+    response=$(curl -sI "$url")
 
-    # redwood_endpoint=$(cat ../redwood/.env | grep 'base_url=' | sed 's/[^=]*=//')
-    # INFO "got redwood endpoint from dcc-ops/redwood/.env: ${redwood_endpoint}"
-
-    # INFO "doing upload with $(pwd)/manifest.tsv"
-    # sudo docker run --rm -it -e ACCESS_TOKEN=${access_token} -e REDWOOD_ENDPOINT=${redwood_endpoint} \
-    #      -v $(pwd)/manifest.tsv:/dcc/manifest.tsv -v $(pwd)/samples:/samples -v $(pwd)/outputs:/outputs \
-    #      quay.io/ucsc_cgl/core-client:1.1.0-alpha spinnaker-upload --skip-submit --force-upload /dcc/manifest.tsv
-
-    # object_id=$(cat outputs/receipt.tsv | tail -n +3 | head -n 1 | cut -f 20)
-    # bundle_id=$(cat outputs/receipt.tsv | tail -n +3 | head -n 1 | cut -f 19)
-    # INFO "the uploaded bundle with id ${bundle_id} has metadata.json with object id ${object_id}"
-
-    # INFO "downloading metadata.json with object id ${object_id}"
-    # sudo mkdir outputs/test_download
-    # sudo docker run --rm -it -e ACCESS_TOKEN=${access_token} -e REDWOOD_ENDPOINT=${redwood_endpoint} \
-    #      -v $(pwd)/outputs:/outputs quay.io/ucsc_cgl/core-client:1.1.0-alpha download ${object_id} /outputs/test_download
-
-    # [[ ! -f outputs/test_download/${bundle_id}/metadata.json ]] && printf "%s: no such file" "outputs/test_download/${bundle_id}/metadata.json" | FATAL && exit 1
-
-    # sudo rm -rf outputs
-
-    # # TODO: run indexer, etc.
-
+    status_code=$(echo "$response" | grep 'HTTP.*' | cut -f2- -d " ")
+    if [[ ! "$status_code" == *"200"* ]]; then
+	ERROR "Did not get status code 200 from host $dcc_host" && exit 1
+    fi
+    
     INFO "TEST SUCCEEDED"
 }
 
