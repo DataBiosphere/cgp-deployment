@@ -48,9 +48,9 @@ function main {
     # hits the DCC Dashboard Host and checks whether it returns a 200
     # status code.
 
-    check_setup
     cd "$(dirname "${BASH_SOURCE[0]}")"
     LOG_LEVEL_ALL
+    check_setup
 
     # Get name of the DCC Dashboard Host.
     curr_dir=$(pwd)
