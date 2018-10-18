@@ -60,14 +60,23 @@ function main {
     curr_dir=$(pwd)
     cd ../boardwalk
     dcc_host=$(grep -o 'dcc_dashboard_service.*' .env | cut -f2- -d=)
+    # Check from environment variable value whether user is white-listed.    
+    whitelist_set=$(grep -o 'email_white.*' .env | cut -f2- -d=)
     cd "$curr_dir"
 
-    url="https://$dcc_host/api/v1/repository/files/export?/"
-    response=$(curl -sI "$url")
-
+    # Get status code of response.
+    url="https://$dcc_host/api/v1/repository/files/export"
+    response=$(curl -sIL "$url")  # no output, just headers, follow redirects
     status_code=$(echo "$response" | grep 'HTTP.*' | cut -f2- -d " ")
-    if [[ ! "$status_code" == *"200"* ]]; then
-        ERROR "Did not get status code 200 from host $dcc_host" && exit 1
+
+    # If the whitelist string is empty user isn't white-listed, and cURL
+    # is expected to return 200; if user is white-listed a 401 is the expected
+    # response.
+    if [[ ! "$status_code" == *"401"* ]] && [[ ! -z "$whitelist_set" ]]; then
+        ERROR "Did not get expected status code 401 from host $dcc_host" && exit 1
+    elif [[ ! "$status_code" == *"200"* ]]\
+	     && [[ ! "$status_code" == *"401"* ]]; then
+	ERROR "Did not get expected status code 200 from host $dcc_host" && exit 1
     fi
 
     INFO "TEST SUCCEEDED"
