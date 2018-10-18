@@ -76,18 +76,15 @@ function main {
 
     # Get status code of response to export functionality.
     url="https://$dcc_host/api/v1/repository/files/export"
-    response=$(curl -sIL "$url")  # no output, just headers, follow redirects
-    status_code=$(echo "$response" | grep 'HTTP.*' | cut -f2- -d " ")
+    status_code=$(curl -I -w "%{http_code}" -s -o /dev/null "$url")
 
     # If the whitelist string is empty user isn't white-listed, and cURL
     # is expected to return 200; if user is white-listed a 401 is the expected
     # response.
-    if [[ ! "$status_code" == *"401"* ]] && [[ ! -z "$whitelist_set" ]]; then
-        ERROR "Did not get expected status code 401 from https://$dcc_host" && exit 1
-    elif [[ ! "$status_code" == *"200"* ]]\
-	     && [[ ! "$status_code" == *"401"* ]]; then
-	ERROR "Response returned status code $status_code from https://$dcc_host"\
-	    && exit 1
+    if [[ "$status_code" -ne 401 ]] && [[ ! -z "$whitelist_set" ]]; then
+        ERROR "Status code: $status_code (expected 401) from $url" && exit 1
+    elif [[ "$status_code" -ne 200 ]] && [[ "$status_code" -ne 401 ]]; then
+	ERROR "Response returned status code $status_code from $url" && exit 1
     fi
 
     INFO "TEST SUCCEEDED"
