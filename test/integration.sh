@@ -80,7 +80,8 @@ function main {
         ERROR "Did not get expected status code 401 from host $dcc_host" && exit 1
     elif [[ ! "$status_code" == *"200"* ]]\
 	     && [[ ! "$status_code" == *"401"* ]]; then
-	ERROR "Did not get expected status code 200 from host $dcc_host" && exit 1
+	ERROR "Response returned status code $status_code from host $dcc_host"\
+	    && exit 1
     fi
 
     INFO "TEST SUCCEEDED"
