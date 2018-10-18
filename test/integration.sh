@@ -64,7 +64,11 @@ function main {
     whitelist_set=$(grep -o 'email_white.*' .env | cut -f2- -d=)
     cd "$curr_dir"
 
-    # Get status code of response.
+    # Check if home page is returned. If so it will not output anything,
+    # otherwise it aborts and prints cURL error code to stdout.
+    curl -fsS "https://$dcc_host" > /dev/null
+
+    # Get status code of response to export functionality.
     url="https://$dcc_host/api/v1/repository/files/export"
     response=$(curl -sIL "$url")  # no output, just headers, follow redirects
     status_code=$(echo "$response" | grep 'HTTP.*' | cut -f2- -d " ")
