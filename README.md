@@ -265,9 +265,10 @@ containers are running.
 
 ### Confirm Proper Function
 
-To test that all Docker containers are successfully running, you can
-run `cd test && ./integration.sh`. This sends a GET to the configured
-DCC dashboard host and checks whether the response is as expected.
+To test that the required number of Docker containers is successfully
+running execute `cd test && ./integration.sh`. This sends several HTTP-GETs
+to the configured DCC dashboard host and checks whether the responses are
+as expected.
 
 ### Troubleshooting
 
