@@ -17,14 +17,17 @@ function check_setup {
 
     # Get array of all required containers from file.
     fname=expected_containers
-    IFS=$'\r\n' GLOBIGNORE='*' command eval  'containers_expected=($(cat $fname))'
+    IFS=$'\r\n' GLOBIGNORE='*'\
+       command eval  'containers_expected=($(cat $fname))'
     containers_expected=($containers_expected)  # cast as array
 
     num_containers_exp="${#containers_expected[@]}"
 
-    # Crude initial test to verify that at least 7 containers are running.
+    # Crude initial test to verify that at least the minimum number of
+    # containers are running.
     [ "${#containers[@]}" -ge $num_containers_exp ] ||\
-        (ERROR "Not running the required number of docker containers." && exit 1)
+        (ERROR "Not running the required number of docker containers."\
+		&& exit 1)
 
     for container_expected in "${containers_expected[@]}"; do
         counter=0
@@ -37,7 +40,8 @@ function check_setup {
         done
 
         if [[ "$counter" -eq $num_containers_exp ]]; then
-            ERROR "One or more docker containers not running." && exit 1
+            ERROR "One or more docker containers not running."\
+		&& exit 1
         fi
     done
 
