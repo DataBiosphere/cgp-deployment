@@ -27,7 +27,7 @@ function check_setup {
     # containers are running.
     [ "${#containers[@]}" -ge $num_containers_exp ] ||\
         (ERROR "Not running the required number of docker containers."\
-		&& exit 1)
+                && exit 1)
 
     for container_expected in "${containers_expected[@]}"; do
         counter=0
@@ -41,7 +41,7 @@ function check_setup {
 
         if [[ "$counter" -eq $num_containers_exp ]]; then
             ERROR "One or more docker containers not running."\
-		&& exit 1
+                && exit 1
         fi
     done
 
@@ -60,7 +60,7 @@ function main {
     curr_dir=$(pwd)
     cd ../boardwalk
     dcc_host=$(grep -o 'dcc_dashboard_service.*' .env | cut -f2- -d=)
-    # Check from environment variable value whether user is white-listed.    
+    # Check from environment variable value whether user is white-listed.
     whitelist_set=$(grep -o 'email_white.*' .env | cut -f2- -d=)
     cd "$curr_dir"
 
@@ -71,7 +71,7 @@ function main {
     # If not 200 write out HTTP status code.
     status_code=$(curl -I -w "%{http_code}" -s -o /dev/null "https://$dcc_host")
     if [[ "$status_code" -ne 200 ]]; then
-	ERROR "HTTP status: $status_code from https://$dcc_host" && exit 1
+        ERROR "HTTP status: $status_code from https://$dcc_host" && exit 1
     fi
 
     # Get status code of response to export functionality.
@@ -84,7 +84,7 @@ function main {
     if [[ "$status_code" -ne 401 ]] && [[ ! -z "$whitelist_set" ]]; then
         ERROR "Status code: $status_code (expected 401) from $url" && exit 1
     elif [[ "$status_code" -ne 200 ]] && [[ "$status_code" -ne 401 ]]; then
-	ERROR "Response returned status code $status_code from $url" && exit 1
+        ERROR "Response returned status code $status_code from $url" && exit 1
     fi
 
     INFO "TEST SUCCEEDED"
