@@ -265,9 +265,10 @@ containers are running.
 
 ### Confirm Proper Function
 
-To test that everything installed successfully, you can run `cd test &&
-./integration.sh`. This will do an upload and download with core-client
-and check the results.
+To test that the required number of Docker containers is successfully
+running execute `cd test && ./integration.sh`. This sends several HTTP-GETs
+to the configured DCC dashboard host and checks whether the responses are
+as expected.
 
 ### Troubleshooting
 
