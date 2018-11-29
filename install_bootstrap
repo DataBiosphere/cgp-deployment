@@ -183,7 +183,7 @@ if [[ "${run_common^^}" = 'Y' ]]; then
     if [[ $(sudo docker ps | grep 'core-' | wc -l) = "0" ]]; then
         echo "starting core primary nginx gateway and common containers"
         cd common
-	sudo docker-compose.yml up -d
+        sudo docker-compose.yml up -d
         cd ..
     else
         echo "core common containers already running."
