@@ -188,7 +188,7 @@ if [[ "${run_common^^}" = 'Y' ]]; then
     else
         echo "core common containers already running."
     fi
-    echo 'you can stop the core common containers with `cd $(pwd)/common && docker-compose.yml down`'
+    echo 'you can stop the core common containers with `cd $(pwd)/common && docker-compose down`'
 else
     echo "the core won't be publicly accessible until the gateway is started"
 fi
