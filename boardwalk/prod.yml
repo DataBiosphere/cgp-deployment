@@ -21,7 +21,7 @@ services:
       ES_PORT: "${es_port}"
       ES_PROTOCOL: "${es_protocol}"
       DOS_DSS_SERVICE: "${dos_dss_service}"
-    image: quay.io/ucsc_cgl/azul-commons:commons-0.1.11-beta
+    image: quay.io/ucsc_cgl/azul-commons:commons-0.1.12-beta
     volumes:
       - ~/dcc-dashboard-service/logs:/app/log
     #build: dcc-dashboard-service
@@ -37,7 +37,7 @@ services:
       - login-db
     restart: always
   dcc-dashboard:
-    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.6-beta
+    image: quay.io/ucsc_cgl/commons-dashboard:commons-0.1.7-beta
     #build: dcc-dashboard
     ports:
       - "80"
